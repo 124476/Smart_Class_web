@@ -1,0 +1,165 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+}
+
+body[data-bs-theme="light"] {
+  background-color: #fff;
+  color: #000;
+}
+
+body[data-bs-theme="light"] footer {
+  background-color: #f8f9fa;
+  color: #000;
+}
+
+body[data-bs-theme="dark"] {
+  background-color: #3c3c3c;
+  color: #ffffff;
+}
+
+body[data-bs-theme="dark"] footer {
+  background-color: #222222;
+  color: #ffffff;
+}
+
+body[data-bs-theme="light"] header {
+  background-color: #f8f9fa;
+  color: #000;
+}
+
+body[data-bs-theme="dark"] header {
+  background-color: #222222;
+  color: #fff;
+}
+
+body[data-bs-theme="light"] header a {
+  color: #000;
+}
+
+body[data-bs-theme="dark"] header a {
+  color: #fff;
+}
+
+body[data-bs-theme="light"] header .btn.dropdown-toggle {
+  color: #4f4f4f;
+}
+
+body[data-bs-theme="dark"] header .btn.dropdown-toggle {
+  color: #fff;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header a {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 15px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+header a:hover,
+header a.active {
+  background-color: #555;
+  border-radius: 5px;
+}
+
+header .btn.dropdown-toggle {
+  color: #686868;
+  background-color: transparent;
+  border: none;
+  transition: color 0.3s;
+}
+
+header .nav-tabs .nav-link {
+  color: #fff;
+}
+
+header .dropdown-menu {
+  background-color: #444;
+}
+
+header .dropdown-menu .dropdown-item {
+  color: #fff;
+  transition: background-color 0.3s;
+}
+
+header .dropdown-menu .dropdown-item:hover {
+  background-color: #555;
+}
+
+footer {
+  color: #fff;
+  text-align: center;
+  padding: 15px 0;
+  margin-top: auto;
+}
+
+footer span {
+  font-size: 14px;
+  color: #aaa;
+}
+
+footer b {
+  font-size: 14px;
+  color: #fff;
+}
+
+/* Анимации для уведомлений */
+.alert {
+  animation: slideIn 0.5s forwards, fadeOut 0.5s 4.5s forwards;
+  margin-bottom: 1rem;
+  border: none;
+  border-left: 4px solid;
+}
+
+.alert-success {
+  background-color: #d1e7dd;
+  color: #0f5132;
+  border-left-color: #0f5132;
+}
+
+.alert-error {
+  background-color: #f8d7da;
+  color: #842029;
+  border-left-color: #842029;
+}
+
+.alert-info {
+  background-color: #cfe2ff;
+  color: #084298;
+  border-left-color: #084298;
+}
+
+.alert-warning {
+  background-color: #fff3cd;
+  color: #664d03;
+  border-left-color: #664d03;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+

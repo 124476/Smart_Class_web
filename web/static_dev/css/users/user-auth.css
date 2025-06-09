@@ -1,0 +1,51 @@
+body {
+    background-color: #f4f7fa;
+    font-family: 'Roboto', sans-serif;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"], input[type="password"], input[type="email"] {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.form-user-auth {
+    max-width: 1300px;
+    margin: 0 auto;
+}
+  
+.form-floating {
+    margin-bottom: 15px;
+}
+
+.form-floating input,
+.form-floating select,
+.form-floating textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-user-auth .btn {
+    max-width: 400px;
+    margin: 0 auto;
+}

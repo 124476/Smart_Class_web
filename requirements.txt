@@ -1,0 +1,8 @@
+Django==4.2.16
+django-active-link==0.1.8
+django-allauth==65.1.0
+django-widget-tweaks==1.5.0
+django-unfold==0.55.2
+python-dotenv==1.0.0
+sorl-thumbnail==12.11.0
+pillow==10.4.0
