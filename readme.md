@@ -49,8 +49,8 @@
 
 ## Ссылки
 
-- **Репозиторий проекта:** [GitHub](https://github.com/124476/DjangoExmple-Prerelease/)
-- **Демо-сайт:** [KrWeb](https://KrWeb.pythonanywhere.com/)
+- **Репозиторий проекта:** [GitHub](https://github.com/124476/Smart_Class_web/)
+- **Демо-сайт:** [Smart Class](https://demosmartclass.pythonanywhere.com/)
 
 > **Примечание:** Инструкцию по запуску проекта и настройке окружения см. в [setup.md](setup.md)
 
