@@ -35,7 +35,6 @@ class Problem(models.Model):
         verbose_name="Описание",
         blank=True,
     )
-
     created_at = models.DateTimeField(
         verbose_name="Создано",
         auto_now_add=True,

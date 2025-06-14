@@ -13,8 +13,9 @@ from django.db import models
 from apps.news.models import News
 from apps.users.models import User
 from apps.classes.models import Class, Computer
-from apps.api.serializers import UserSerializer, ClassSerializer, \
-    ComputerSerializer, NewsSerializer
+from apps.api import serializers
+from apps.foods.models import Food, FoodWork
+from apps.objects.models import Object, Topic, Subsection
 
 
 class LoginAPIView(APIView):
@@ -63,7 +64,7 @@ class UserListIfMainUserAPIView(APIView):
                             status=403)
 
         users = User.objects.filter(main_user_id=request.user.id, is_created=0)
-        serializer = UserSerializer(users, many=True)
+        serializer = serializers.UserSerializer(users, many=True)
         return Response(serializer.data)
 
 
@@ -82,7 +83,7 @@ class IsOwnerAndTeacher(permissions.BasePermission):
 
 
 class ClassViewSet(viewsets.ModelViewSet):
-    serializer_class = ClassSerializer
+    serializer_class = serializers.ClassSerializer
     authentication_classes = [BasicAuthentication]
     permission_classes = [permissions.IsAuthenticated, IsOwnerAndTeacher]
 
@@ -94,7 +95,7 @@ class ClassViewSet(viewsets.ModelViewSet):
 
 
 class ComputerViewSet(viewsets.ModelViewSet):
-    serializer_class = ComputerSerializer
+    serializer_class = serializers.ComputerSerializer
     authentication_classes = [BasicAuthentication]
     permission_classes = [permissions.IsAuthenticated, IsOwnerAndTeacher]
 
@@ -107,21 +108,21 @@ class ComputerViewSet(viewsets.ModelViewSet):
 
 class ComputerByUUIDView(generics.RetrieveAPIView):
     queryset = Computer.objects.all()
-    serializer_class = ComputerSerializer
+    serializer_class = serializers.ComputerSerializer
     permission_classes = [permissions.AllowAny]  # или настрой свои права
     lookup_field = "uuid"
 
 
 class UpdateComputerImageView(generics.UpdateAPIView):
     queryset = Computer.objects.all()
-    serializer_class = ComputerSerializer
+    serializer_class = serializers.ComputerSerializer
     permission_classes = [permissions.AllowAny]
     lookup_field = "uuid"
     http_method_names = ["patch", "put"]
 
 
 class NewsListCreateView(generics.ListCreateAPIView):
-    serializer_class = NewsSerializer
+    serializer_class = serializers.NewsSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
@@ -136,7 +137,7 @@ class NewsListCreateView(generics.ListCreateAPIView):
 
 
 class NewsRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = NewsSerializer
+    serializer_class = serializers.NewsSerializer
     permission_classes = [permissions.IsAuthenticated]
     lookup_field = 'id'
 
@@ -146,3 +147,77 @@ class NewsRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
             models.Q(user=user) | models.Q(
                 user__id=getattr(user, 'main_user_id', None))
         )
+
+
+
+class ProblemListCreateView(generics.ListCreateAPIView):
+    serializer_class = serializers.ProblemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        return serializers.Problem.objects.filter(
+            models.Q(user=user) |
+            models.Q(user__id=getattr(user, 'main_user_id', None))
+        )
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+class ProblemRetrieveUpdateView(generics.RetrieveUpdateAPIView):
+    serializer_class = serializers.ProblemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    lookup_field = 'id'
+
+    def get_queryset(self):
+        user = self.request.user
+        return serializers.Problem.objects.filter(
+            models.Q(user=user) |
+            models.Q(user__id=getattr(user, 'main_user_id', None))
+        )
+
+
+class FoodViewSet(viewsets.ModelViewSet):
+    queryset = Food.objects.all()
+    serializer_class = serializers.FoodSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class FoodWorkViewSet(viewsets.ModelViewSet):
+    queryset = FoodWork.objects.all()
+    serializer_class = serializers.FoodWorkSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class ObjectViewSet(viewsets.ModelViewSet):
+    queryset = Object.objects.all()
+    serializer_class = serializers.ObjectSerializer
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Object.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+class TopicViewSet(viewsets.ModelViewSet):
+    queryset = Topic.objects.all()
+    serializer_class = serializers.TopicSerializer
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Topic.objects.filter(object__user=self.request.user)
+
+
+class SubsectionViewSet(viewsets.ModelViewSet):
+    queryset = Subsection.objects.all()
+    serializer_class = serializers.SubsectionSerializer
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Subsection.objects.filter(topic__object__user=self.request.user)

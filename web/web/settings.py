@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "apps.users.apps.UsersConfig",
     "apps.stats.apps.StatsConfig",
     "apps.foods.apps.FoodsConfig",
+    "apps.objects.apps.ObjectsConfig",
     "apps.classes.apps.ClassesConfig",
     "apps.problems.apps.ProblemsConfig",
     "apps.homepage.apps.HomepageConfig",

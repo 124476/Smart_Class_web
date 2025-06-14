@@ -1,3 +1,4 @@
+import os
 import uuid
 
 from django.db import models
@@ -71,3 +72,16 @@ class Computer(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        try:
+            old = Computer.objects.get(pk=self.pk)
+        except Computer.DoesNotExist:
+            old = None
+
+        super().save(*args, **kwargs)  # сначала сохраняем новый объект (чтобы был id)
+
+        if old and old.image and self.image and old.image != self.image:
+            old_image_path = old.image.path
+            if os.path.isfile(old_image_path):
+                os.remove(old_image_path)
