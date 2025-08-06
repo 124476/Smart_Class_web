@@ -1,0 +1,10 @@
+{% extends "works/base_works.html" %}
+
+{% block works_content %}
+  <h2>Удалить событие</h2>
+  <p>Вы уверены, что хотите удалить "{{ object.title }}"?</p>
+  <form method="post">{% csrf_token %}
+    <button type="submit" class="btn btn-danger">Удалить</button>
+    <a href="{% url 'works:events' %}" class="btn btn-secondary">Отмена</a>
+  </form>
+{% endblock %}

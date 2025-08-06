@@ -1,0 +1,33 @@
+{% extends "works/base_works.html" %}
+
+{% block works_content %}
+<div class="dashboard-container">
+    <div class="header">
+        <div class="left">
+            <h1>Рабочая панель</h1>
+        </div>
+        <a href="{% url 'works:event_add' %}" class="create-btn">
+            <span style="display: flex; align-items: center; gap: 8px; font-size: 18px;">
+              <i class="bi bi-plus-circle" style="font-size: 30px;"></i>
+              Новое событие
+            </span>
+        </a>
+    </div>
+
+    <div class="dashboard-widgets">
+        <div class="widget welcome">
+            <h2>Добро пожаловать, {{ request.user.first_name|default:request.user.username }}!</h2>
+            <p>У вас {{ event_count }} событие(й), {{ completed_events }} уже завершено.</p>
+        </div>
+        <div class="widget next-event">
+            <h3>Ближайшее событие</h3>
+            {% if next_event %}
+                <p><strong>{{ next_event.title }}</strong></p>
+                <p>{{ next_event.date }}</p>
+            {% else %}
+                <p>Нет запланированных событий.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

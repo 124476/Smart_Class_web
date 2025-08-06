@@ -1,121 +1,275 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Авторизация{% endblock %}
+{% block title %}Вход / Регистрация{% endblock %}
 
-{% block content %}
-<div class="auth-container">
-  <div class="auth-form">
-    <h2 class="auth-title">Вход</h2>
-    <form method="post" class="auth-form-content">
-      {% csrf_token %}
-
-      <div class="form-group">
-        <label for="id_username">Логин</label>
-        <input type="text" name="username" id="id_username" class="form-input" placeholder="Введите ваш логин" required>
-      </div>
-
-      <div class="form-group">
-        <label for="id_password">Пароль</label>
-        <input type="password" name="password" id="id_password" class="form-input" placeholder="Введите ваш пароль" required>
-      </div>
-
-      <button type="submit" class="auth-button">Войти</button>
-
-      <div class="auth-links">
-        <p>Нет аккаунта? <a href="{% url 'users:signup' %}" class="auth-link">Зарегистрироваться</a></p>
-        <a href="#" class="auth-link">Забыли пароль?</a>
-      </div>
-    </form>
-  </div>
-</div>
-
+{% block css %}
 <style>
-  /* Основные стили */
   .auth-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 80vh;
-    background-color: #f5f5f5;
-    font-family: 'Arial', sans-serif;
+      background-color: #fff;
+      border-radius: 30px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+      position: relative;
+      overflow: hidden;
+      width: 768px;
+      max-width: 100%;
+      min-height: 480px;
+      margin: 2rem auto;
+  }
+
+  .auth-container p {
+      font-size: 14px;
+      line-height: 20px;
+      letter-spacing: 0.3px;
+      margin: 20px 0;
+  }
+
+  .auth-container span {
+      font-size: 12px;
+  }
+
+  .auth-container a {
+      color: #333;
+      font-size: 13px;
+      text-decoration: none;
+      margin: 15px 0 10px;
+  }
+
+  .auth-container button {
+      background-color: #512da8;
+      color: #fff;
+      font-size: 12px;
+      padding: 10px 45px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-top: 10px;
+      cursor: pointer;
+  }
+
+  .auth-container button.hidden {
+      background-color: transparent;
+      border-color: #fff;
   }
 
   .auth-form {
-    background: white;
-    padding: 2rem 3rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 0 40px;
+      height: 100%;
   }
 
-  .auth-title {
-    text-align: center;
-    color: #333;
-    margin-bottom: 1.5rem;
-    font-size: 1.8rem;
+  .auth-container input {
+      background-color: #eee;
+      border: none;
+      margin: 8px 0;
+      padding: 10px 15px;
+      font-size: 13px;
+      border-radius: 8px;
+      width: 100%;
+      outline: none;
   }
 
-  .form-group {
-    margin-bottom: 1.5rem;
+  .form-container {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      transition: all 0.6s ease-in-out;
   }
 
-  .form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #555;
-    font-weight: 500;
+  .sign-in {
+      left: 0;
+      width: 50%;
+      z-index: 2;
   }
 
-  .form-input {
-    width: 100%;
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 1rem;
-    transition: border-color 0.3s;
+  .auth-container.active .sign-in {
+      transform: translateX(100%);
   }
 
-  .form-input:focus {
-    border-color: #4a90e2;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+  .sign-up {
+      left: 0;
+      width: 50%;
+      opacity: 0;
+      z-index: 1;
   }
 
-  .auth-button {
-    width: 100%;
-    padding: 12px;
-    background-color: #4a90e2;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  .auth-container.active .sign-up {
+      transform: translateX(100%);
+      opacity: 1;
+      z-index: 5;
+      animation: move 0.6s;
   }
 
-  .auth-button:hover {
-    background-color: #3a7bc8;
+  @keyframes move {
+      0%, 49.99% {
+          opacity: 0;
+          z-index: 1;
+      }
+      50%, 100% {
+          opacity: 1;
+          z-index: 5;
+      }
   }
 
-  .auth-links {
-    margin-top: 1.5rem;
-    text-align: center;
-    font-size: 0.9rem;
+  .toggle-container {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+      transition: all 0.6s ease-in-out;
+      border-radius: 150px 0 0 100px;
+      z-index: 1000;
   }
 
-  .auth-link {
-    color: #4a90e2;
-    text-decoration: none;
-    transition: color 0.3s;
-    display: block;
-    margin: 0.5rem 0;
+  .auth-container.active .toggle-container {
+      transform: translateX(-100%);
+      border-radius: 0 150px 100px 0;
   }
 
-  .auth-link:hover {
-    color: #3a7bc8;
-    text-decoration: underline;
+  .toggle {
+      background-color: #512da8;
+      height: 100%;
+      background: linear-gradient(to right, #5c6bc0, #512da8);
+      color: #fff;
+      position: relative;
+      left: -100%;
+      height: 100%;
+      width: 200%;
+      transform: translateX(0);
+      transition: all 0.6s ease-in-out;
+  }
+
+  .auth-container.active .toggle {
+      transform: translateX(50%);
+  }
+
+  .toggle-panel {
+      position: absolute;
+      width: 50%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 0 30px;
+      text-align: center;
+      top: 0;
+      transform: translateX(0);
+      transition: all 0.6s ease-in-out;
+  }
+
+  .toggle-left {
+      transform: translateX(-200%);
+  }
+
+  .auth-container.active .toggle-left {
+      transform: translateX(0);
+  }
+
+  .toggle-right {
+      right: 0;
+      transform: translateX(0);
+  }
+
+  .auth-container.active .toggle-right {
+      transform: translateX(200%);
+  }
+
+  .error {
+      color: #dc3545;
+      font-size: 0.875rem;
+      width: 100%;
+      margin-top: -5px;
+      margin-bottom: 5px;
+  }
+
+  .error-message {
+      color: #dc3545;
+      font-size: 13px;
+      margin-top: 5px;
   }
 </style>
+{% endblock %}
+
+{% block content %}
+  <div class="container my-5">
+    <div class="auth-container {% if form.errors or register_form.errors %}{% endif %}" id="authContainer">
+      <div class="form-container sign-in">
+        <form method="post" action="{% url 'users:login' %}" class="auth-form">
+          {% csrf_token %}
+          <h1>Вход</h1>
+          <span>используйте email и пароль</span>
+
+          <input name="username" placeholder="Логин" required>
+          <input type="password" name="password" placeholder="Пароль" required>
+            {% if form.errors %}
+              <div class="error-message">Неверный email или пароль</div>
+            {% endif %}
+          <button type="submit" class="btn">Войти</button>
+        </form>
+      </div>
+
+      <div class="form-container sign-up">
+        <form method="get" action="{% url 'users:register' %}" class="auth-form">
+          {% csrf_token %}
+          <h1>Регистрация</h1>
+          <span>используйте email для регистрации</span>
+
+          {% for field in register_form %}
+            {{ field }}
+            {% if field.errors %}
+              <div class="error">{{ field.errors|join:", " }}</div>
+            {% endif %}
+          {% endfor %}
+
+          <button type="submit" class="btn">Зарегистрироваться</button>
+        </form>
+      </div>
+
+      <div class="toggle-container">
+        <div class="toggle">
+          <div class="toggle-panel toggle-left">
+            <h1>С возвращением!</h1>
+            <p>Введите свои данные, чтобы использовать все возможности сайта</p>
+            <button class="hidden" id="login">Войти</button>
+          </div>
+          <div class="toggle-panel toggle-right">
+            <h1>Привет, друг!</h1>
+            <p>Зарегистрируйтесь, чтобы получить доступ ко всем возможностям</p>
+            <button class="hidden" id="register">Регистрация</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block js %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('authContainer');
+        const registerBtn = document.getElementById('register');
+        const loginBtn = document.getElementById('login');
+
+        registerBtn.addEventListener('click', () => {
+            container.classList.add("active");
+        });
+
+        loginBtn.addEventListener('click', () => {
+            container.classList.remove("active");
+        });
+
+        {% if register_form.errors %}
+            container.classList.remove("active");
+        {% endif %}
+    });
+  </script>
 {% endblock %}

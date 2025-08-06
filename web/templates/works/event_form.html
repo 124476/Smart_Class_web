@@ -1,0 +1,9 @@
+{% extends "works/base_works.html" %}
+
+{% block works_content %}
+  <h2>{{ view.object.pk|yesno:"Редактировать событие,Добавить событие" }}</h2>
+  <form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+  </form>
+{% endblock %}

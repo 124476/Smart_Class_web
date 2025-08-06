@@ -4,10 +4,79 @@
 {% block title %}О нас{% endblock %}
 
 {% block content %}
+<section class="about-section py-5">
   <div class="container">
-    <h2>О нас</h2>
-    <div class="card-group">
-      <h3>Всё нормально >:)</h3>
+    <div class="text-center mb-5">
+      <h1 class="display-4 fw-bold animate__animated animate__fadeInDown">О нас</h1>
+      <p class="lead text-muted animate__animated animate__fadeInUp">Кто мы, чем живём и зачем всё это</p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm animate__animated animate__fadeInUp">
+          <div class="card-body text-center">
+            <i class="bi bi-lightning-charge display-4 text-warning mb-3"></i>
+            <h5 class="card-title">Наша миссия</h5>
+            <p class="card-text">Создаём инфраструктуру для соревнований, помогаем спортсменам и организаторам достигать новых вершин.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm animate__animated animate__fadeInUp animate__delay-0_5s">
+          <div class="card-body text-center">
+            <i class="bi bi-code-slash display-4 text-primary mb-3"></i>
+            <h5 class="card-title">Разработка</h5>
+            <p class="card-text">Современный стек, адаптивный дизайн, безопасность и расширяемость — вот наш подход к платформе.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm animate__animated animate__fadeInUp animate__delay-1s">
+          <div class="card-body text-center">
+            <i class="bi bi-people display-4 text-success mb-3"></i>
+            <h5 class="card-title">Команда</h5>
+            <p class="card-text">Нас объединяет любовь к спорту, программированию и желанию менять среду к лучшему.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+</section>
+
+<style>
+  .about-section {
+    height: 100%;
+  }
+
+  .animate__delay-0_5s {
+    animation-delay: 0.5s !important;
+  }
+
+  .card {
+    border: none;
+    border-radius: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 30px rgba(0,0,0,0.1);
+  }
+
+  .card-title {
+    font-weight: 600;
+  }
+
+  .card-text {
+    font-size: 1rem;
+    color: var(--bs-body-color);
+  }
+
+  /* Адаптивные иконки */
+  .card i {
+    font-size: 3rem;
+  }
+</style>
 {% endblock %}

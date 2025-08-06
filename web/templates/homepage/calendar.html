@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Календарь{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-center align-items-center gap-3 mb-4 mt-4">
+  <a href="?year={{ prev_year }}&month={{ prev_month }}" class="month-nav-btn" title="Предыдущий месяц">
+    <i class="bi bi-chevron-left"></i>
+  </a>
+  <h2 class="m-0 fw-bold text-primary">{{ month_name }} {{ year }}</h2>
+  <a href="?year={{ next_year }}&month={{ next_month }}" class="month-nav-btn" title="Следующий месяц">
+    <i class="bi bi-chevron-right"></i>
+  </a>
+</div>
+
+
+<div class="calendar-grid m-3">
+  <div class="calendar-header">Пн</div>
+  <div class="calendar-header">Вт</div>
+  <div class="calendar-header">Ср</div>
+  <div class="calendar-header">Чт</div>
+  <div class="calendar-header">Пт</div>
+  <div class="calendar-header">Сб</div>
+  <div class="calendar-header">Вс</div>
+
+  {% for day in days %}
+    {% if day %}
+      <div class="calendar-day {% if day.is_today %}calendar-today{% endif %}"
+           title="{{ day.date|date:'d E Y' }}">
+        {{ day.number }}
+        {% if day.has_event %}
+          <div class="event-text">Крутого мероприятие 10034</div>
+        {% endif %}
+      </div>
+    {% else %}
+      <div></div>
+    {% endif %}
+  {% endfor %}
+</div>
+{% endblock %}

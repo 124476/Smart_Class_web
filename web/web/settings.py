@@ -31,29 +31,30 @@ INSTALLED_APPS = [
     "unfold.contrib.guardian",
     "unfold.contrib.simple_history",
 
-    "apps.api.apps.ApiConfig",
     "apps.news.apps.NewsConfig",
+    "apps.api.apps.ApiConfig",
     "apps.about.apps.AboutConfig",
-    "apps.users.apps.UsersConfig",
-    "apps.stats.apps.StatsConfig",
-    "apps.foods.apps.FoodsConfig",
-    "apps.objects.apps.ObjectsConfig",
     "apps.classes.apps.ClassesConfig",
+    "apps.users.apps.UsersConfig",
+    "apps.foods.apps.FoodsConfig",
+    "apps.works.apps.WorksConfig",
+    "apps.objects.apps.ObjectsConfig",
     "apps.problems.apps.ProblemsConfig",
+    "apps.stats.apps.StatsConfig",
     "apps.homepage.apps.HomepageConfig",
 
+    "django.contrib.sites",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
     "rest_framework",
     "active_link",
     "sorl.thumbnail",
-    "allauth",
-    "allauth.account",
-    'widget_tweaks',
+    "widget_tweaks",
 ]
 
 MIDDLEWARE = [
@@ -65,7 +66,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "web.urls"
@@ -103,24 +103,21 @@ AUTH_PASSWORD_VALIDATORS = [
         ".UserAttributeSimilarityValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation" 
-        ".MinimumLengthValidator",
+        "NAME": "django.contrib.auth.password_validation" ".MinimumLengthValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation" 
-        ".CommonPasswordValidator",
+        "NAME": "django.contrib.auth.password_validation" ".CommonPasswordValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation" 
-        ".NumericPasswordValidator",
+        "NAME": "django.contrib.auth.password_validation" ".NumericPasswordValidator",
     },
 ]
 
-AUTH_USER_MODEL = "users.User"
+AUTH_USER_MODEL = "users.CustomUser"
 
-LOGIN_URL = "/auth/login/"
-LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/"
+LOGIN_URL = "users:login"
+LOGIN_REDIRECT_URL = "homepage:main"
+LOGOUT_REDIRECT_URL = "homepage:main"
 
 LANGUAGE_CODE = "ru"
 
@@ -146,12 +143,17 @@ LOCALE_PATHS = (BASE_DIR / "locale/",)
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 ACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_EMAIL_REQUIRED = False
 ACCOUNT_CHANGE_EMAIL = True
+
+TELEGRAM_BOT_TOKEN = "8042446546:AAE8Wr1Y4BOPCz-eQRQJzfBu7WCgEFSctN8"
+TELEGRAM_CHAT_ID = "@kfu_luceum"
+
+SITE_ID = 1
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [

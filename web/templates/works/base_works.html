@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Работа{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="works-container">
+    <div class="works-sidebar">
+        <div class="works-sidebar-header">
+            <i class='bi bi-kanban-fill'></i>
+            <a href="{% url 'works:dashboard' %}"><span>Рабочая панель</span></a>
+        </div>
+        <ul class="works-side-menu">
+            <li class="{% if request.resolver_match.url_name == 'events' %}active{% endif %}">
+                <a href="{% url 'works:events' %}">
+                    <i class='bi bi-calendar-event'></i>
+                    <span>События</span>
+                </a>
+            </li>
+            <li class="{% if request.resolver_match.url_name == 'feedback' %}active{% endif %}">
+                <a href="{% url 'works:feedback' %}">
+                    <i class='bi bi-chat-square-text'></i>
+                    <span>Обратная связь</span>
+                </a>
+            </li>
+            <li class="{% if request.resolver_match.url_name == 'analytics' %}active{% endif %}">
+                <a href="{% url 'works:analytics' %}">
+                    <i class='bi bi-graph-up'></i>
+                    <span>Аналитика</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="works-content">
+        {% block works_content %}{% endblock %}
+    </div>
+</div>
+{% endblock %}

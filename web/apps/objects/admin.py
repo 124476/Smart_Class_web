@@ -7,10 +7,8 @@ from apps.objects.models import Object, Topic, Subsection
 
 @admin.register(Object)
 class ObjectAdmin(ModelAdmin):
-    list_display = ('id', 'name', 'user')
+    list_display = ('id', 'name')
     search_fields = ('name', 'user__username')
-    list_filter = ('user',)
-    raw_id_fields = ('user',)
 
 
 @admin.register(Topic)

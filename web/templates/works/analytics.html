@@ -1,0 +1,105 @@
+{% extends "works/base_works.html" %}
+
+{% block works_content %}
+<h2>Аналитика</h2>
+<div class="dashboard-container">
+  <ul class="insights">
+    <li>
+      <i class='bi bi-calendar-check'></i>
+      <span class="info">
+        <h3>{{ event_count }}</h3>
+        <p>Всего событий</p>
+      </span>
+    </li>
+    <li>
+      <i class='bi bi-check-circle'></i>
+      <span class="info">
+        <h3>{{ completed_events }}</h3>
+        <p>Завершено</p>
+      </span>
+    </li>
+    <li>
+      <i class='bi bi-people-fill'></i>
+      <span class="info">
+        <h3>{{ participants_count }}</h3>
+        <p>Участников</p>
+      </span>
+    </li>
+    <li>
+      <i class='bi bi-star-fill'></i>
+      <span class="info">
+        <h3>{{ avg_rating|default:"0.0" }}</h3>
+        <p>Средняя оценка</p>
+      </span>
+    </li>
+  </ul>
+
+  <div class="bottom-data">
+    <div class="orders">
+      <div class="header">
+        <i class='bi bi-list-ul'></i>
+        <h3>Последние события</h3>
+        <i class='bi bi-filter'></i>
+        <i class='bi bi-search'></i>
+      </div>
+      <table>
+        <thead>
+        <tr>
+          <th>Событие</th>
+          <th>Дата</th>
+          <th>Статус</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for event in recent_events %}
+        <tr>
+          <td>
+            <strong>{{ event.title }}</strong>
+          </td>
+          <td>{{ event.date|date:"d.m.Y" }}</td>
+          <td>
+            <span class="status {% if event.is_past %}completed{% else %}pending{% endif %}"
+                style="color:black">
+              {% if event.is_past %}Завершено{% else %}Активно{% endif %}
+            </span>
+          </td>
+        </tr>
+        {% empty %}
+          <tr>
+            <td colspan="3">Нет событий</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="reminders">
+      <div class="header">
+        <i class='bi bi-bell-fill'></i>
+        <h3>Напоминания</h3>
+        <i class='bi bi-filter'></i>
+        <i class='bi bi-plus'></i>
+      </div>
+      <ul class="task-list">
+        {% for reminder in reminders %}
+          <li class="{% if reminder.completed %}completed{% else %}not-completed{% endif %}">
+            <div class="task-title">
+              <i class='bi {% if reminder.completed %}bi-check-circle{% else %}bi-x-circle{% endif %}'></i>
+              <p>{{ reminder.title }}</p>
+            </div>
+            <i class='bi bi-three-dots-vertical'></i>
+          </li>
+        {% empty %}
+          <li>
+            <div class="task-title">
+              <i class='bi bi-info-circle'></i>
+              <p>Нет напоминаний</p>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

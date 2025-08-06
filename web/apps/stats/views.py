@@ -11,33 +11,44 @@ class AnalyticsView(TemplateView):
         context = super().get_context_data(**kwargs)
 
         registrations = (
-            User.objects
-            .annotate(month=TruncMonth('date_joined'))
-            .values('month')
-            .annotate(total=Count('id'))
-            .order_by('month')
+            User.objects.annotate(month=TruncMonth("date_joined"))
+            .values("month")
+            .annotate(total=Count("id"))
+            .order_by("month")
         )
 
         months = []
         counts = []
 
         for item in registrations:
-            months.append(
-                item['month'].strftime('%b'))
-            counts.append(item['total'])
+            months.append(item["month"].strftime("%b"))
+            counts.append(item["total"])
 
         if not months:
-            months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug',
-                      'Sep', 'Oct', 'Nov', 'Dec']
-            counts = [120, 190, 170, 220, 300, 280, 350, 400, 370, 420, 390,
-                      450]
+            months = [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec",
+            ]
+            counts = [120, 190, 170, 220, 300, 280, 350, 400, 370, 420, 390, 450]
 
-        context['chart_data'] = {
-            'labels': months,
-            'datasets': [{
-                'label': 'Регистрации',
-                'data': counts,
-            }]
+        context["chart_data"] = {
+            "labels": months,
+            "datasets": [
+                {
+                    "label": "Регистрации",
+                    "data": counts,
+                }
+            ],
         }
 
         return context

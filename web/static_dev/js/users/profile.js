@@ -1,9 +1,3 @@
-submit_button = document.getElementById("submit_button");
-
-if (!document.getElementById("submit_button").classList.contains("d-none")) {
-    submit_button.classList.add("d-none");
-}
-
 document.getElementById("avatar").addEventListener("click", function() {
     document.getElementById("id_avatar").click();
 });
@@ -15,19 +9,5 @@ document.getElementById("id_avatar").addEventListener("change", function() {
             document.getElementById("avatar").src = e.target.result;
         }
         reader.readAsDataURL(this.files[0]);
-        submit_button.classList.remove("d-none");
     }
-});
-
-document.getElementById("avatar-clear_id")?.addEventListener("change", () => {
-    submit_button.classList.remove("d-none");
-});
-
-document.getElementById("id_username").addEventListener("change", () => {
-    submit_button.classList.remove("d-none")
-});
-
-document.getElementById("delete_avatar")?.addEventListener("click", () => {
-    document.getElementById("avatar-clear_id").setAttribute("checked", "true");
-    submit_button.click();
 });

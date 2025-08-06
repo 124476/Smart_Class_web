@@ -1,42 +1,12 @@
 from django.urls import path
-from apps.users.views import (
-    RegisterView,
-    CustomLoginView,
-    CustomLogoutView,
-    AccountView,
-    PasswordChangeView,
-    PasswordChangeDoneView
-)
+from apps.users import views
 
 app_name = "users"
 
 urlpatterns = [
-    path(
-        'signup/',
-        RegisterView.as_view(),
-        name='signup',
-    ),
-    path(
-        'login/',
-        CustomLoginView.as_view(),
-        name='login',
-    ),
-    path(
-        'logout/', CustomLogoutView.as_view(),
-        name='logout',
-    ),
-    path(
-        'profile/', AccountView.as_view(),
-        name='profile',
-    ),
-    path(
-        'password-change/',
-        PasswordChangeView.as_view(),
-        name='password_change',
-    ),
-    path(
-        'password-change/done/',
-        PasswordChangeDoneView.as_view(),
-        name='password_change_done',
-    ),
+    path("signup/", views.RegisterView.as_view(), name="register"),
+    path("login/", views.UserLoginView.as_view(), name="login"),
+    path("logout/", views.user_logout, name="logout"),
+    path("profile/", views.ProfileView.as_view(), name="profile"),
+    path('delete_avatar/', views.delete_avatar, name='delete_avatar'),
 ]

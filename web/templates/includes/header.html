@@ -1,57 +1,55 @@
 {% load static %}
 {% load active_link_tags %}
 
-<header>
-  <div class="container d-flex justify-content-between align-items-center py-3">
-    <a href="/" class="logo d-flex align-items-center">
-      <img src="{% static 'img/favicon.svg' %}" alt="Logo" height="40">
-      <span class="ms-2 fw-bold">Smart class</span>
+<header class="py-3 px-3 sticky-top backdrop-blur bg-body bg-opacity-75 shadow-sm border-bottom">
+  <div class="container d-flex flex-wrap justify-content-between align-items-center">
+    <a href="/" class="d-flex align-items-center text-decoration-none dark:text-light">
+      <img src="{% static 'img/favicon.svg' %}" alt="Logo" height="40" class="me-2">
+      <span class="fs-4 fw-semibold">Умная школа</span>
     </a>
-    <nav class="my-auto nav-item dropdown">
-      <a href="{% url 'homepage:main' %}" class="{% if view_name == 'homepage:main' %}active{% endif %}">Главная</a>
-      <a href="{% url 'about:main' %}" class="{% if view_name == 'about:main' %}active{% endif %}">О нас</a>
+
+    <nav class="d-none d-md-flex gap-4 align-items-center">
+      <a href="{% url 'homepage:main' %}" class="nav-link fw-medium {% if request.resolver_match.view_name == 'homepage:main' %}choose{% endif %}">Главная</a>
+      <a href="{% url 'homepage:calendar' %}" class="nav-link fw-medium {% if request.resolver_match.view_name == 'homepage:calendar' %}choose{% endif %}">Календарь</a>
+      <a href="{% url 'news:main' %}" class="nav-link fw-medium {% if request.resolver_match.view_name == 'news:main' %}choose{% endif %}">Новости</a>
+      <a href="{% url 'about:main' %}" class="nav-link fw-medium {% if request.resolver_match.view_name == 'about:main' %}choose{% endif %}">О нас</a>
     </nav>
-    <nav class="d-flex">
-      <nav class="my-auto nav-item dropdown">
-        <button class="btn border-0 dropdown-toggle d-flex align-items-center" id="theme-dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <span><i id="theme-icon-active" class="bi bi-sun-fill"></i> Тема</span>
+
+    <div class="d-flex align-items-center gap-3">
+
+      <div class="dropdown">
+        <button class="btn border-0 dropdown-toggle d-flex align-items-center gap-1" id="themeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-circle-half"></i> <span class="d-none d-sm-inline">Тема</span>
         </button>
-        <ul class="dropdown-menu">
-          <li>
-            <button class="dropdown-item" data-bs-theme-value="light">Белая</button>
-          </li>
-          <li>
-            <button class="dropdown-item" data-bs-theme-value="dark">Черная</button>
-          </li>
+        <ul class="dropdown-menu dropdown-menu-end shadow-sm rounded">
+          <li><button class="dropdown-item" data-bs-theme-value="light"><i class="bi bi-sun me-2 text-warning"></i>Светлая</button></li>
+          <li><button class="dropdown-item" data-bs-theme-value="dark"><i class="bi bi-moon me-2 text-primary"></i>Тёмная</button></li>
         </ul>
-      </nav>
+      </div>
 
       {% if request.resolver_match.view_name != 'users:login' %}
         {% if request.user.is_authenticated %}
-          <div class="dropdown ms-2">
-            <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="{% if request.user.has_avatar %}{{ request.user.get_small_avatar }}{% else %}{% static 'img/default_user_avatar.jpg' %}{% endif %}" alt="{{ request.user.username }}" class="rounded-circle" width="48" height="48">
-              <strong>{{ request.user.username }}</strong>
+          <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="{% if user.profile.image %}{{ user.profile.image.url }}{% else %}{% static 'img/default_user_avatar.jpg' %}{% endif %}" class="rounded-circle me-2" width="40" height="40" alt="{{ request.user.username }}">
+              <span class="fw-medium">{{ request.user.username }}</span>
             </a>
-            <ul class="dropdown-menu text-small">
-              <li><a class="dropdown-item" {% if view_name != "users:profile" %}href="{% url 'users:profile' %}"{% endif %}>Мой профиль</a></li>
-              <li><hr class="dropdown-divider"></li>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm rounded">
+              <li><a class="dropdown-item" {% if view_name != 'users:profile' %}href="{% url 'users:profile' %}"{% endif %}>Мой профиль</a></li>
+              <li><a class="dropdown-item" href="{% url 'works:dashboard' %}">Работа</a></li>
               {% if request.user.is_staff %}
-                <li><a href="{% url 'admin:index' %}" class="dropdown-item">
-                  Админ панель
-                </a></li>
+                <li><a class="dropdown-item" href="{% url 'admin:index' %}">Админ-панель</a></li>
               {% endif %}
-
-              <li><a class="dropdown-item" href="{% url 'users:logout' %}">Выйти</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger" href="{% url 'users:logout' %}">Выйти</a></li>
             </ul>
           </div>
         {% else %}
-          <a href="{% url 'users:login' %}" class="btn btn-outline my-auto me-2">
-            Войти
-          </a>
+          <a href="{% url 'users:login' %}" class="btn btn-outline-primary fw-medium">Войти</a>
         {% endif %}
+      {% else %}
+      <a href="{% url 'users:login' %}" class="btn btn-outline-primary fw-medium" style="visibility: hidden;">Войти</a>
       {% endif %}
-    </nav>
+    </div>
   </div>
 </header>
-

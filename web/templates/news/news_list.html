@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Новости{% endblock %}
+
+{% block content %}
+  <div class="container py-4">
+    <h2 class="mb-4 text-center">📰 Последние новости</h2>
+
+    {% if news_list %}
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for news in news_list %}
+          <div class="col">
+            <div class="card h-100 shadow-sm">
+              {% if news.image %}
+                <img src="{{ news.image.url }}" class="card-img-top" alt="{{ news.title }}" style="object-fit: cover; height: 200px;">
+              {% endif %}
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{ news.name }}</h5>
+                <p class="card-text">{{ news.content|truncatewords:30 }}</p>
+              </div>
+              <div class="card-footer text-muted small">
+                {{ news.created_at|date:"d E Y H:i" }}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-center text-muted">Пока нет новостей.</p>
+    {% endif %}
+  </div>
+{% endblock %}

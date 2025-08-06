@@ -19,8 +19,6 @@ class UserSerializer(serializers.ModelSerializer):
     FirstName = serializers.CharField(source='first_name')
     LastName = serializers.CharField(source='last_name')
     Email = serializers.EmailField(source='email')
-    Avatar = serializers.SerializerMethodField()
-    Roles = serializers.SerializerMethodField()
 
     class Meta:
         model = User
@@ -29,8 +27,6 @@ class UserSerializer(serializers.ModelSerializer):
             'FirstName',
             'LastName',
             'Email',
-            'Avatar',
-            'Roles',
         ]
 
     def get_Avatar(self, obj):
@@ -41,9 +37,6 @@ class UserSerializer(serializers.ModelSerializer):
                 return request.build_absolute_uri(avatar_url)
             return avatar_url
         return None
-
-    def get_Roles(self, obj):
-        return list(obj.roles.values_list('name', flat=True))
 
 
 class ClassSerializer(serializers.ModelSerializer):
@@ -163,7 +156,8 @@ class FoodWorkSerializer(serializers.ModelSerializer):
         food = data.get('food')
         date = data.get('date')
 
-        if FoodWork.objects.filter(food=food, date=date).exclude(id=self.instance.id if self.instance else None).exists():
+        if FoodWork.objects.filter(food=food, date=date).exclude(
+                id=self.instance.id if self.instance else None).exists():
             raise ValidationError("Запись с таким food и date уже существует.")
         return data
 
@@ -171,7 +165,7 @@ class FoodWorkSerializer(serializers.ModelSerializer):
 class ObjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Object
-        fields = ['id', 'name', 'user']
+        fields = ['id', 'name']
 
 
 class TopicSerializer(serializers.ModelSerializer):

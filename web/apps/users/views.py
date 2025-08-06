@@ -1,108 +1,93 @@
-from django.views.generic import FormView, TemplateView
-from django.contrib.auth.views import LoginView, LogoutView
+from django.http import JsonResponse
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, logout
+from django.contrib.auth.views import LoginView
+from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib import messages
-from django.urls import reverse_lazy
-from apps.users.forms import CustomUserCreationForm, CustomUserChangeForm
-from apps.users.models import User
-from django.contrib.auth.forms import PasswordChangeForm, AuthenticationForm
-from django.contrib.auth import login, update_session_auth_hash
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
+
+from apps.users.forms import SignUpForm, UserUpdateForm, ProfileUpdateForm
+from apps.users.models import Profile
 
 
-class RegisterView(FormView):
-    template_name = 'users/signup.html'
-    form_class = CustomUserCreationForm
-    success_url = reverse_lazy('homepage:main')
+class RegisterView(View):
+    template_name = "users/signup.html"
 
-    def form_valid(self, form):
-        user = form.save()
-        login(self.request, user)
-        messages.success(self.request, 'Регистрация прошла успешно!')
-        return super().form_valid(form)
+    def get(self, request):
+        form = SignUpForm()
+        return render(request, self.template_name, {'form': form})
 
-    def form_invalid(self, form):
-        messages.error(self.request, 'Исправьте ошибки в форме.')
-        return super().form_invalid(form)
+    def post(self, request):
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            Profile.objects.create(user=user)
+            login(request, user)
+            return redirect('homepage:main')
 
-
-class CustomLoginView(LoginView):
-    template_name = 'users/login.html'
-    form_class = AuthenticationForm
-
-    def form_valid(self, form):
-        messages.info(self.request, f"Вы вошли как {form.get_user()}.")
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        messages.error(self.request, "Неверное имя пользователя или пароль.")
-        return super().form_invalid(form)
+        return render(request, self.template_name, {'form': form})
 
 
-class CustomLogoutView(LogoutView):
-    next_page = reverse_lazy('homepage:main')
-
-    def dispatch(self, request, *args, **kwargs):
-        messages.info(request, "Вы успешно вышли из системы.")
-        return super().dispatch(request, *args, **kwargs)
+class UserLoginView(LoginView):
+    template_name = "users/login.html"
 
 
-class AccountView(LoginRequiredMixin, FormView):
-    template_name = "users/profile.html"
-    form_class = CustomUserChangeForm
-    success_url = reverse_lazy('users:profile')
-
-    def get_initial(self):
-        user = self.request.user
-        return {
-            "username": user.username,
-            "email": user.email,
-            "first_name": user.first_name,
-            "last_name": user.last_name,
-            "avatar": user.avatar,
-        }
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['instance'] = self.request.user
-        return kwargs
-
-    def form_valid(self, form):
-        new_username = form.cleaned_data.get("username")
-
-        if new_username != self.request.user.username:
-            if User.objects.filter(username=new_username).exists():
-                form.add_error("username", "Это имя пользователя уже занято.")
-                return self.form_invalid(form)
-
-        form.save()
-        messages.success(self.request, "Профиль успешно обновлен!")
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        messages.error(self.request, "Пожалуйста, исправьте ошибки в форме.")
-        return super().form_invalid(form)
+def user_logout(request):
+    logout(request)
+    return redirect("users:login")
 
 
-class PasswordChangeView(LoginRequiredMixin, FormView):
-    template_name = 'users/password_change.html'
-    form_class = PasswordChangeForm
-    success_url = reverse_lazy('users:password_change_done')
+class ProfileView(LoginRequiredMixin, View):
+    def get(self, request):
+        profile, created = Profile.objects.get_or_create(user=request.user)
 
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = ProfileUpdateForm(instance=profile)
 
-    def form_valid(self, form):
-        user = form.save()
-        update_session_auth_hash(self.request, user)
-        messages.success(self.request, 'Пароль успешно изменен!')
-        return super().form_valid(form)
+        return render(
+            request,
+            "users/profile.html",
+            {
+                "user_form": user_form,
+                "profile_form": profile_form,
+                "birthday_value": profile.birthday.strftime(
+                    '%Y-%m-%d') if profile.birthday else ''
+            },
+        )
 
-    def form_invalid(self, form):
-        messages.error(self.request, 'Исправьте ошибки в форме.')
-        return super().form_invalid(form)
+    def post(self, request):
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = ProfileUpdateForm(
+            request.POST,
+            request.FILES,
+            instance=request.user.profile
+        )
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save()
+            profile = profile_form.save(commit=False)
+            profile.user = user
+            profile.save()
+            return redirect("users:profile")
+
+        return render(
+            request,
+            "users/profile.html",
+            {
+                "user_form": user_form,
+                "profile_form": profile_form,
+                "birthday_value": request.POST.get('birthday', '')
+            },
+        )
 
 
-class PasswordChangeDoneView(LoginRequiredMixin, TemplateView):
-    template_name = 'users/password_change_done.html'
+@require_POST
+@login_required
+def delete_avatar(request):
+    profile = request.user.profile
+    if profile.image:
+        profile.image.delete()
+        profile.image = None
+        profile.save()
+    return JsonResponse({'status': 'success'})

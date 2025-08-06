@@ -1,0 +1,17 @@
+{% extends "works/base_works.html" %}
+
+{% block works_content %}
+  <h2>Обратная связь</h2>
+
+  {% if success %}
+    <div class="alert alert-success" role="alert">
+      Спасибо, ваше сообщение отправлено!
+    </div>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary">Отправить</button>
+  </form>
+{% endblock %}

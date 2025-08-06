@@ -1,21 +1,10 @@
-html, body {
-  height: 100%;
-}
-
-body {
-  font-family: 'Roboto', sans-serif;
-  background-color: #f8f9fa;
-  display: flex;
-  flex-direction: column;
-}
-
 body[data-bs-theme="light"] {
-  background-color: #fff;
+  background-color: #f2f2f2;
   color: #000;
 }
 
-body[data-bs-theme="light"] footer {
-  background-color: #f8f9fa;
+body[data-bs-theme="light"] .footer {
+  background-color: #c3c0c0;
   color: #000;
 }
 
@@ -24,13 +13,13 @@ body[data-bs-theme="dark"] {
   color: #ffffff;
 }
 
-body[data-bs-theme="dark"] footer {
+body[data-bs-theme="dark"] .footer {
   background-color: #222222;
   color: #ffffff;
 }
 
 body[data-bs-theme="light"] header {
-  background-color: #f8f9fa;
+  background-color: #c3c0c0;
   color: #000;
 }
 
@@ -55,111 +44,120 @@ body[data-bs-theme="dark"] header .btn.dropdown-toggle {
   color: #fff;
 }
 
-header {
-  background-color: #333;
-  color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+body[data-bs-theme="dark"] header .nav-link {
+    color: #C0C0C0;
 }
 
-header nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+body[data-bs-theme="light"] header .nav-link {
+    color: #696969;
 }
 
-header a {
-  color: #fff;
-  text-decoration: none;
-  padding: 10px 15px;
-  transition: background-color 0.3s, color 0.3s;
+body[data-bs-theme="dark"] header .choose {
+    color: #fff;
 }
 
-header a:hover,
-header a.active {
-  background-color: #555;
-  border-radius: 5px;
+body[data-bs-theme="light"] header .choose {
+    color: #000000;
 }
 
-header .btn.dropdown-toggle {
-  color: #686868;
-  background-color: transparent;
-  border: none;
-  transition: color 0.3s;
+[data-bs-theme="dark"] .auth-container {
+    background-color: #3c3c3c !important;
 }
 
-header .nav-tabs .nav-link {
-  color: #fff;
+[data-bs-theme="dark"] .auth-container input {
+    background-color: #3c3c3c !important;
+    border: 1px solid #fff;
 }
 
-header .dropdown-menu {
-  background-color: #444;
+[data-bs-theme="dark"] .auth-form {
+    background-color: #3c3c3c !important;
 }
 
-header .dropdown-menu .dropdown-item {
-  color: #fff;
-  transition: background-color 0.3s;
+body[data-bs-theme="light"] a {
+  color: #000;
 }
 
-header .dropdown-menu .dropdown-item:hover {
-  background-color: #555;
-}
-
-footer {
-  color: #fff;
-  text-align: center;
-  padding: 15px 0;
-  margin-top: auto;
-}
-
-footer span {
-  font-size: 14px;
-  color: #aaa;
-}
-
-footer b {
-  font-size: 14px;
+body[data-bs-theme="dark"] a {
   color: #fff;
 }
 
-/* Анимации для уведомлений */
-.alert {
-  animation: slideIn 0.5s forwards, fadeOut 0.5s 4.5s forwards;
-  margin-bottom: 1rem;
-  border: none;
-  border-left: 4px solid;
+.backdrop-blur {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
-.alert-success {
-  background-color: #d1e7dd;
-  color: #0f5132;
-  border-left-color: #0f5132;
+.nav-link {
+  transition: color 0.3s ease;
 }
 
-.alert-error {
-  background-color: #f8d7da;
-  color: #842029;
-  border-left-color: #842029;
+.nav-link:hover {
+  color: var(--bs-primary);
 }
 
-.alert-info {
-  background-color: #cfe2ff;
-  color: #084298;
-  border-left-color: #084298;
+.dropdown-menu {
+  transition: all 0.2s ease-in-out;
 }
 
-.alert-warning {
-  background-color: #fff3cd;
-  color: #664d03;
-  border-left-color: #664d03;
+.backdrop-blur {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
-@keyframes slideIn {
-  from { transform: translateX(100%); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+footer a:hover {
+  color: var(--bs-primary) !important;
+  transition: color 0.3s ease;
 }
 
-@keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
+header a:hover {
+    transition: transform 0.2s ease-in-out;
+    transform: scale(1.03);
+    cursor: pointer;
 }
 
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    text-align: center;
+    padding-right: 2vw;
+    padding-left: 2vw;
+}
+
+.calendar-day {
+    padding: 14px;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    position: relative;
+}
+
+.calendar-day:hover {
+    transform: scale(1.03);
+    cursor: pointer;
+}
+
+.calendar-today {
+    border: 1px solid #0D6EFD !important;
+}
+
+.month-nav-btn {
+    width: 3rem;
+    height: 3rem;
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    justify-content: center;
+    border-radius: 50% !important;
+}
+
+.month-nav-btn i {
+    font-size: 1.2rem;
+}
+
+.calendar-header {
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}

@@ -20,6 +20,7 @@ from apps.objects.models import Object, Topic, Subsection
 
 class LoginAPIView(APIView):
     permission_classes = [permissions.AllowAny]
+    http_method_names = ['post']
 
     def post(self, request):
         username = request.data.get("username")
@@ -27,59 +28,70 @@ class LoginAPIView(APIView):
 
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login = user.username
+            try:
+                profile = user.profile
 
-            image_base64 = None
-            if user.avatar and user.avatar.path:
-                try:
-                    with open(user.avatar.path, "rb") as image_file:
-                        encoded_string = base64.b64encode(
-                            image_file.read()).decode('utf-8')
-                        image_base64 = encoded_string
-                except Exception as e:
-                    print(e)
-                    image_base64 = None
+                image_data = None
+                if profile.image:
+                    try:
+                        # Получаем оригинальное изображение (не миниатюру)
+                        with open(profile.image.path, "rb") as image_file:
+                            image_data = base64.b64encode(
+                                image_file.read()).decode('utf-8')
+                    except Exception as e:
+                        print(f"Ошибка обработки изображения: {e}")
 
-            roles = list(user.roles.values_list('name', flat=True))
+                response_data = {
+                    "FirstName": user.first_name,
+                    "LastName": user.last_name,
+                    "Email": user.email,
+                    "Login": user.username,
+                    "Image": image_data,
+                    "MainUser": profile.main_user_id,
+                    "Birthday": profile.birthday.strftime("%Y-%m-%d") if profile.birthday else None,
+                }
 
-            return Response({
-                "FirstName": user.first_name,
-                "LastName": user.last_name,
-                "Email": user.email,
-                "Login": login,
-                "Image": image_base64,
-                "MainUser": user.main_user_id,
-                "Roles": roles,
-            })
-        return Response({"error": "Неверные учетные данные"},
-                        status=status.HTTP_401_UNAUTHORIZED)
+                return Response(response_data)
+
+            except Profile.DoesNotExist:
+                return Response(
+                    {"error": "Профиль пользователя не найден"},
+                    status=status.HTTP_404_NOT_FOUND,
+                )
+            except Exception as e:
+                print(f"Ошибка при получении данных пользователя: {e}")
+                return Response(
+                    {"error": "Внутренняя ошибка сервера"},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                )
+
+        return Response(
+            {"error": "Неверные учетные данные"},
+            status=status.HTTP_401_UNAUTHORIZED,
+        )
 
 
 class UserListIfMainUserAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
-        if not User.objects.filter(id=request.user.id, is_created=1).exists():
-            return Response({"error": "Вы не являетесь главным пользователем"},
-                            status=403)
+        if not User.objects.filter(id=request.user.id, profile__is_main=1).exists():
+            return Response(
+                {"error": "Вы не являетесь главным пользователем"},
+                            status=403,
+                            )
 
-        users = User.objects.filter(main_user_id=request.user.id, is_created=0)
+        users = User.objects.filter(profile__main_user_id=request.user.id)
         serializer = serializers.UserSerializer(users, many=True)
         return Response(serializer.data)
 
 
 class IsOwnerAndTeacher(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
-        is_owner = obj.user == request.user
-
-        roles = request.user.roles.values_list('name', flat=True)
-        is_teacher = "Учитель" in roles
-
-        return is_owner and is_teacher
+        return request.user.profile.is_main
 
     def has_permission(self, request, view):
-        roles = request.user.roles.values_list('name', flat=True)
-        return "Учитель" in roles
+        return request.user.profile.is_main
 
 
 class ClassViewSet(viewsets.ModelViewSet):
@@ -149,7 +161,6 @@ class NewsRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
         )
 
 
-
 class ProblemListCreateView(generics.ListCreateAPIView):
     serializer_class = serializers.ProblemSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -193,31 +204,31 @@ class FoodWorkViewSet(viewsets.ModelViewSet):
 class ObjectViewSet(viewsets.ModelViewSet):
     queryset = Object.objects.all()
     serializer_class = serializers.ObjectSerializer
-    authentication_classes = [BasicAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    http_method_names = ['get']  # Разрешаем только GET-запросы
 
-    def get_queryset(self):
-        return Object.objects.filter(user=self.request.user)
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class TopicViewSet(viewsets.ModelViewSet):
     queryset = Topic.objects.all()
     serializer_class = serializers.TopicSerializer
-    authentication_classes = [BasicAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    http_method_names = ['get']
 
-    def get_queryset(self):
-        return Topic.objects.filter(object__user=self.request.user)
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class SubsectionViewSet(viewsets.ModelViewSet):
     queryset = Subsection.objects.all()
     serializer_class = serializers.SubsectionSerializer
-    authentication_classes = [BasicAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    http_method_names = ['get']  # Разрешаем только GET-запросы
 
-    def get_queryset(self):
-        return Subsection.objects.filter(topic__object__user=self.request.user)
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
