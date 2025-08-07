@@ -1,0 +1,41 @@
+{% extends "works/base_works.html" %}
+
+{% block works_content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="mb-0">{{ event.title }}</h2>
+        </div>
+        <div class="card-body">
+            <div class="mb-3">
+                <h5>Дата проведения:</h5>
+                <p>{{ event.date }}</p>
+            </div>
+
+            {% if event.description %}
+            <div class="mb-3">
+                <h5>Описание:</h5>
+                <p>{{ event.description }}</p>
+            </div>
+            {% endif %}
+
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{% url 'works:events' %}" class="btn btn-secondary">
+                    ← Назад к списку
+                </a>
+                <div>
+                    <a href="{% url 'works:event_edit' event.pk %}" class="btn btn-primary">
+                        ✏️ Редактировать
+                    </a>
+                    <a href="{% url 'works:event_delete' event.pk %}" class="btn btn-danger">
+                        🗑️ Удалить
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-muted">
+            Создано: {{ event.created_at|date:"d.m.Y H:i" }}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -10,7 +10,6 @@ urlpatterns = [
     path("api/", include("apps.api.urls")),
     path("foods/", include("apps.foods.urls")),
     path("problems/", include("apps.problems.urls")),
-    path("objects/", include("apps.objects.urls")),
     path("classes/", include("apps.classes.urls")),
     path("works/", include("apps.works.urls")),
     path("about/", include("apps.about.urls")),

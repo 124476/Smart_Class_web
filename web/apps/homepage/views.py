@@ -1,5 +1,7 @@
 import calendar
 from datetime import date
+from apps.news.models import News
+from apps.works.models import Event
 
 import django.views.generic
 
@@ -55,6 +57,30 @@ class CalendarView(django.views.generic.TemplateView):
         _, num_days = calendar.monthrange(year, month)
         skip_days = date_start.weekday()
 
+        news_for_month = News.objects.filter(
+            created_at__year=year,
+            created_at__month=month
+        ).order_by('created_at')
+
+        news_by_day = {}
+        for news in news_for_month:
+            day = news.created_at.day
+            if day not in news_by_day:
+                news_by_day[day] = []
+            news_by_day[day].append(news)
+
+        events_for_month = Event.objects.filter(
+            date__year=year,
+            date__month=month
+        ).order_by('date')
+
+        events_by_day = {}
+        for event in events_for_month:
+            day = event.date.day
+            if day not in events_by_day:
+                events_by_day[day] = []
+            events_by_day[day].append(event)
+
         days = []
         for day_num in [""] * skip_days + list(range(1, num_days + 1)):
             if day_num:
@@ -62,7 +88,9 @@ class CalendarView(django.views.generic.TemplateView):
                 days.append({
                     'number': day_num,
                     'date': day_date,
-                    'is_today': day_date == today
+                    'is_today': day_date == today,
+                    'news': news_by_day.get(day_num, []),
+                    'events': events_by_day.get(day_num, [])
                 })
             else:
                 days.append(None)
@@ -83,11 +111,5 @@ class CalendarView(django.views.generic.TemplateView):
             "next_month": next_month,
             "today": today,
         })
-
-        event_days = [5, 10, 15]
-
-        for day in context['days']:
-            if day:
-                day['has_event'] = day['number'] in event_days
 
         return context

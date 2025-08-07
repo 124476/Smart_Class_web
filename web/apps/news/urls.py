@@ -1,10 +1,10 @@
-import django.urls
-import django.views.generic
+from django.urls import path
 
-import apps.news.views
+from apps.news.views import NewsDetailView, Description
 
 
 app_name = "news"
 urlpatterns = [
-    django.urls.path("", apps.news.views.Description.as_view(), name="main"),
+    path("news/", Description.as_view(), name="main"),
+    path('news/<int:pk>/', NewsDetailView.as_view(), name='news_detail'),
 ]

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}{{ news.name }}{% endblock %}
+
+{% block css %}
+<style>
+  .news-content {
+      font-size: 1.1rem;
+      line-height: 1.8;
+  }
+
+  .news-content img {
+      max-width: 100%;
+      height: auto;
+      margin: 1rem 0;
+      border-radius: 0.25rem;
+  }
+
+  .img-caption {
+      font-size: 0.9rem;
+      color: #6c757d;
+      text-align: center;
+      margin-top: 0.5rem;
+  }
+
+  @media (max-width: 768px) {
+      .news-content {
+          font-size: 1rem;
+      }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h1 class="mb-3">{{ news.name }}</h1>
+
+            <div class="d-flex align-items-center mb-4 text-muted">
+                <div class="me-3">
+                    <i class="bi bi-calendar-event"></i>
+                    {{ news.created_at|date:"d E Y" }}
+                </div>
+                <div class="me-3">
+                    <i class="bi bi-clock"></i>
+                    {{ news.created_at|date:"H:i" }}
+                </div>
+                <div>
+                    <i class="bi bi-person-circle"></i>
+                    {{ news.user }}
+                </div>
+            </div>
+
+            {% if news.image %}
+            <div class="mb-4">
+                <img src="{{ news.image.url }}" alt="{{ news.name }}" class="img-fluid rounded">
+                {% if news.image_caption %}
+                <div class="text-center mt-2 text-muted small">
+                    {{ news.image_caption }}
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <div class="news-content mb-5">
+                {{ news.description|linebreaks }}
+            </div>
+
+            <div class="d-flex justify-content-between border-top pt-3">
+                {% if user.is_staff %}
+                <div>
+                    <a href="{% url 'admin:news_news_change' news.id %}" class="btn btn-outline-secondary me-2">
+                        <i class="bi bi-pencil"></i> Редактировать
+                    </a>
+                    <a href="{% url 'admin:news_news_delete' news.id %}" class="btn btn-outline-danger">
+                        <i class="bi bi-trash"></i> Удалить
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -16,7 +16,6 @@
   </a>
 </div>
 
-
 <div class="calendar-grid m-3">
   <div class="calendar-header">Пн</div>
   <div class="calendar-header">Вт</div>
@@ -30,10 +29,23 @@
     {% if day %}
       <div class="calendar-day {% if day.is_today %}calendar-today{% endif %}"
            title="{{ day.date|date:'d E Y' }}">
-        {{ day.number }}
-        {% if day.has_event %}
-          <div class="event-text">Крутого мероприятие 10034</div>
-        {% endif %}
+        <div class="day-number">{{ day.number }}</div>
+        {% for news in day.news %}
+          <div class="calendar-news my-1">
+            <a href="{{ news.get_absolute_url }}" class="news-link" title="{{ news.name }}">
+              Новость: {{ news.name|truncatechars:15 }}
+            </a>
+          </div>
+        {% endfor %}
+        {% for event in day.events %}
+                <div class="calendar-event">
+                    <a href="{{ event.get_absolute_url }}"
+                       class="event-link"
+                       title="{{ event.title }}">
+                        Событие: {{ event.title|truncatechars:15 }}
+                    </a>
+                </div>
+            {% endfor %}
       </div>
     {% else %}
       <div></div>

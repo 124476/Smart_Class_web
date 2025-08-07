@@ -10,6 +10,7 @@
           <strong>{{ event.title }}</strong> — {{ event.date }}
         </span>
         <span>
+          <a href="{{ event.get_absolute_url }}" class="btn btn-sm btn-outline-primary">Подробнее</a>
           <a href="{% url 'works:event_edit' event.pk %}" class="btn btn-sm btn-outline-primary">✏️</a>
           <a href="{% url 'works:event_delete' event.pk %}" class="btn btn-sm btn-outline-danger">🗑️</a>
         </span>

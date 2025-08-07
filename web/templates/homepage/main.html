@@ -2,13 +2,340 @@
 
 {% load static %}
 
-{% block title %}Главная{% endblock %}
+{% block title %}Smart Class - Умное управление школой{% endblock %}
+
+{% block css %}
+  <style>
+    :root {
+      --primary-color: #4e73df;
+      --secondary-color: #1cc88a;
+      --dark-color: #5a5c69;
+    }
+
+    .hero-section {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 6rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .feature-card {
+      transition: all 0.3s ease;
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      height: 100%;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+    }
+
+    .floating {
+      animation: floating 3s ease-in-out infinite;
+    }
+
+    @keyframes floating {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(78, 115, 223, 0.7); }
+      70% { box-shadow: 0 0 0 15px rgba(78, 115, 223, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(78, 115, 223, 0); }
+    }
+
+    .stats-card {
+      border-left: 5px solid var(--primary-color);
+      transition: all 0.3s;
+    }
+
+    .stats-card:hover {
+      transform: scale(1.05);
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+
+    .btn-primary:hover {
+      background-color: #3a5bc7;
+      border-color: #3a5bc7;
+    }
+
+    .btn-secondary {
+      background-color: var(--secondary-color);
+      border-color: var(--secondary-color);
+    }
+
+    .btn-secondary:hover {
+      background-color: #17a673;
+      border-color: #17a673;
+    }
+
+    .news-card {
+      transition: all 0.3s;
+    }
+
+    .news-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .parallax {
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .section-title {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 2rem;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 50%;
+      height: 3px;
+      background: var(--primary-color);
+    }
+  </style>
+{% endblock %}
 
 {% block content %}
-  <div class="container">
-    <h2>Главная страница</h2>
-    <div class="card-group">
-      <h3>Всё нормально :)</h3>
+  <section class="hero-section text-center">
+    <div class="container position-relative mt-4">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 animate__animated animate__fadeIn">
+          <h1 class="display-3 fw-bold mb-4">Smart Class</h1>
+          <p class="lead mb-5">Инновационная платформа для управления учебным процессом, компьютерными классами и школьной инфраструктурой</p>
+          <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+          </div>
+        </div>
+      </div>
+      <div class="row mt-5 animate__animated animate__fadeInUp">
+        <div class="col">
+          <img src="{% static 'img/extra_logo.png' %}" alt="Smart Class" class="img-fluid floating" style="height: 144px;">
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <section class="py-5 border-bottom">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-3">
+          <div class="stats-card p-4 rounded shadow-lg animate__animated animate__fadeInLeft">
+            <h3 class="fw-bold text-primary">100+</h3>
+            <p class="mb-0 text-muted">Управляемых компьютеров</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stats-card p-4 rounded shadow-lg animate__animated animate__fadeInLeft animate__delay-1s">
+            <h3 class="fw-bold text-primary">24/7</h3>
+            <p class="mb-0 text-muted">Мониторинг состояния</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stats-card p-4 rounded shadow-lg animate__animated animate__fadeInRight animate__delay-1s">
+            <h3 class="fw-bold text-primary">50+</h3>
+            <p class="mb-0 text-muted">Функций управления</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stats-card p-4 rounded shadow-lg animate__animated animate__fadeInRight">
+            <h3 class="fw-bold text-primary">1</h3>
+            <p class="mb-0 text-muted">Удобная система</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="py-5">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="section-title animate__animated animate__fadeInDown">Наши возможности</h2>
+        <p class="lead animate__animated animate__fadeInUp">Все, что нужно для современной школы</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-4 animate__animated animate__fadeInUp">
+          <div class="feature-card p-4 text-center">
+            <div class="feature-icon">
+              <i class="bi bi-pc-display"></i>
+            </div>
+            <h3>Управление классами</h3>
+            <p>Централизованное управление компьютерными классами, мониторинг состояния оборудования, удаленный доступ.</p>
+            <a href="{% url 'works:dashboard' %}" class="btn btn-sm btn-outline-primary">Подробнее</a>
+          </div>
+        </div>
+        <div class="col-md-4 animate__animated animate__fadeInUp animate__delay-1s">
+          <div class="feature-card p-4 text-center">
+            <div class="feature-icon">
+              <i class="bi bi-newspaper"></i>
+            </div>
+            <h3>Школьные новости</h3>
+            <p>Публикация и управление школьными новостями, событиями и объявлениями для учеников и родителей.</p>
+            <a href="{% url 'news:main' %}" class="btn btn-sm btn-outline-primary">Подробнее</a>
+          </div>
+        </div>
+        <div class="col-md-4 animate__animated animate__fadeInUp animate__delay-2s">
+          <div class="feature-card p-4 text-center">
+            <div class="feature-icon">
+              <i class="bi bi-robot"></i>
+            </div>
+            <h3>Автоматизация</h3>
+            <p>Автоматизация рутинных процессов: расписание, отчетность, питание в столовой и многое другое.</p>
+            <a href="{% url 'works:dashboard' %}" class="btn btn-sm btn-outline-primary">Подробнее</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5 parallax" style="background-image:url({% static 'img/people.png' %});">
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 text-center animate__animated animate__zoomIn">
+          <h2 class="display-5 fw-bold mb-4 text-light">Инновации в образовании</h2>
+          <p class="lead mb-5 text-light">Smart Class объединяет технологии и образование, создавая комфортную среду для обучения и преподавания.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="section-title animate__animated animate__fadeInDown">Как это работает</h2>
+      </div>
+      <div class="row align-items-center">
+        <div class="col-lg-6 animate__animated animate__fadeInLeft">
+          <div class="accordion" id="howItWorks">
+            <div class="accordion-item mb-3 border-0 shadow-sm rounded overflow-hidden">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  <i class="bi bi-laptop me-2"></i> Установка клиента
+                </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#howItWorks">
+                <div class="accordion-body">
+                  Легкая установка клиентского приложения на все компьютеры в школе. Автоматическое подключение к центральной системе управления.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item mb-3 border-0 shadow-sm rounded overflow-hidden">
+              <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  <i class="bi bi-gear me-2"></i> Настройка системы
+                </button>
+              </h2>
+              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#howItWorks">
+                <div class="accordion-body">
+                  Гибкая настройка под нужды вашей школы. Определение прав доступа, создание групп компьютеров, настройка мониторинга.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item border-0 shadow-sm rounded overflow-hidden">
+              <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  <i class="bi bi-graph-up me-2"></i> Использование
+                </button>
+              </h2>
+              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#howItWorks">
+                <div class="accordion-body">
+                  Интуитивно понятный интерфейс позволяет легко управлять всеми аспектами школьной инфраструктуры. Получайте отчеты и аналитику в реальном времени.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 animate__animated animate__fadeInRight">
+          <img src="{% static 'img/how_it_works.png' %}" alt="Как это работает" class="img-fluid floating">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/noframework.waypoints.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      new Waypoint({
+        element: document.querySelector('.stats-card'),
+        handler: function(direction) {
+          this.element.classList.add('animate__animated', 'animate__fadeInUp');
+        },
+        offset: '75%'
+      });
+
+      new Waypoint({
+        element: document.querySelector('#features'),
+        handler: function(direction) {
+          const features = document.querySelectorAll('.feature-card');
+          features.forEach((feature, index) => {
+            setTimeout(() => {
+              feature.classList.add('animate__animated', 'animate__fadeInUp');
+            }, index * 200);
+          });
+        },
+        offset: '75%'
+      });
+
+      new Waypoint({
+        element: document.querySelector('.news-card'),
+        handler: function(direction) {
+          const newsCards = document.querySelectorAll('.news-card');
+          newsCards.forEach((card, index) => {
+            setTimeout(() => {
+              card.classList.add('animate__animated', 'animate__fadeInUp');
+            }, index * 200);
+          });
+        },
+        offset: '75%'
+      });
+
+      if (window.innerWidth < 992) {
+        document.querySelectorAll('.parallax').forEach(el => {
+          el.style.backgroundAttachment = 'scroll';
+        });
+      }
+    });
+
+    const ctaBtn = document.querySelector('.btn-pulse');
+    if (ctaBtn) {
+      setInterval(() => {
+        ctaBtn.classList.toggle('animate__pulse');
+      }, 2000);
+    }
+  </script>
 {% endblock %}

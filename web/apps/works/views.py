@@ -7,6 +7,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
     TemplateView,
+    DetailView,
 )
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
@@ -19,6 +20,15 @@ class EventListView(LoginRequiredMixin, ListView):
     model = Event
     template_name = "works/events.html"
     context_object_name = "events"
+
+    def get_queryset(self):
+        return Event.objects.filter(user=self.request.user)
+
+
+class EventDetailView(LoginRequiredMixin, DetailView):
+    model = Event
+    template_name = "works/event_detail.html"
+    context_object_name = "event"
 
     def get_queryset(self):
         return Event.objects.filter(user=self.request.user)
