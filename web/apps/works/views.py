@@ -25,13 +25,10 @@ class EventListView(LoginRequiredMixin, ListView):
         return Event.objects.filter(user=self.request.user)
 
 
-class EventDetailView(LoginRequiredMixin, DetailView):
+class EventDetailView(DetailView):
     model = Event
     template_name = "works/event_detail.html"
     context_object_name = "event"
-
-    def get_queryset(self):
-        return Event.objects.filter(user=self.request.user)
 
 
 class EventCreateView(LoginRequiredMixin, CreateView):

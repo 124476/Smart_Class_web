@@ -1,6 +1,6 @@
-{% extends "works/base_works.html" %}
+{% extends "base.html" %}
 
-{% block works_content %}
+{% block content %}
 <div class="container mt-4">
     <div class="card">
         <div class="card-header">
@@ -20,9 +20,15 @@
             {% endif %}
 
             <div class="d-flex justify-content-between mt-4">
+                {% if request.user.is_authenticated %}
                 <a href="{% url 'works:events' %}" class="btn btn-secondary">
                     ← Назад к списку
                 </a>
+                {% else %}
+                <a href="{% url 'homepage:calendar' %}" class="btn btn-secondary">
+                    ← Назад к календарю
+                </a>
+                {% endif %}
                 <div>
                     <a href="{% url 'works:event_edit' event.pk %}" class="btn btn-primary">
                         ✏️ Редактировать
