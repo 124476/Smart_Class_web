@@ -12,6 +12,5 @@ urlpatterns = [
         "events/<int:pk>/delete/", views.EventDeleteView.as_view(), name="event_delete"
     ),
     path("feedback/", views.FeedbackView.as_view(), name="feedback"),
-    path("analytics/", views.AnalyticsView.as_view(), name="analytics"),
     path('events/<int:pk>/', views.EventDetailView.as_view(), name='event_detail'),
 ]

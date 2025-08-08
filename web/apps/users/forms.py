@@ -75,6 +75,12 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ("username", "email", "first_name", "last_name")
+        labels = {
+            'username': 'Имя пользователя',
+            'email': 'Email',
+            'first_name': 'Имя',
+            'last_name': 'Фамилия',
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -85,6 +91,10 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ("birthday", "image")
+        labels = {
+            'birthday': 'Дата рождения',
+            'image': 'Аватар',
+        }
         widgets = {
             'birthday': forms.DateInput(
                 attrs={

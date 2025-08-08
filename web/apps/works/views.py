@@ -81,31 +81,6 @@ class FeedbackView(LoginRequiredMixin, CreateView):
         return context
 
 
-class AnalyticsView(LoginRequiredMixin, TemplateView):
-    template_name = "works/analytics.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        user_events = Event.objects.filter(user=self.request.user)
-
-        context["event_count"] = user_events.count()
-        context["completed_events"] = user_events.filter(
-            date__lt=timezone.now(),
-        ).count()
-        context["recent_events"] = user_events.order_by('-date')[:5]
-
-        context["participants_count"] = 0
-        context["avg_rating"] = "4.5"
-
-        context["reminders"] = [
-            {"title": "Подготовить отчет", "completed": False},
-            {"title": "Создать новое событие", "completed": True},
-            {"title": "Проверить отзывы", "completed": False},
-        ]
-
-        return context
-
-
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = "works/dashboard.html"
 
