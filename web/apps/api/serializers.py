@@ -1,5 +1,7 @@
 __all__ = ()
 
+from io import BytesIO
+from PIL import Image
 import base64
 
 from rest_framework import serializers
@@ -97,7 +99,7 @@ class NewsSerializer(serializers.ModelSerializer):
             'created_at',
             "photo",
         ]
-        read_only_fields = ['created_at',]
+        read_only_fields = ['created_at', ]
 
     def get_photo(self, obj):
         if obj.image:
@@ -132,13 +134,13 @@ class ProblemSerializer(serializers.ModelSerializer):
             'status_name',
             'created_at',
         ]
-        read_only_fields = ['created_at',]
+        read_only_fields = ['created_at', ]
 
 
 class FoodSerializer(serializers.ModelSerializer):
     class Meta:
         model = Food
-        fields = ['id', 'name', 'price',]
+        fields = ['id', 'name', 'price', ]
 
 
 class FoodWorkSerializer(serializers.ModelSerializer):
@@ -174,7 +176,40 @@ class TopicSerializer(serializers.ModelSerializer):
 
 class SubsectionSerializer(serializers.ModelSerializer):
     topic_name = serializers.CharField(source='topic.name', read_only=True)
+    photo = serializers.SerializerMethodField()
 
     class Meta:
         model = Subsection
-        fields = ['id', 'name', 'description', 'topic', 'topic_name']
+        fields = [
+            'id',
+            'name',
+            'description',
+            'topic',
+            'topic_name',
+            'photo',  # Только уменьшенное изображение
+        ]
+
+    def get_photo(self, obj):
+        if not obj.image:
+            return None
+
+        try:
+            # Открываем изображение
+            img = Image.open(obj.image)
+
+            # Конвертируем в RGB если нужно
+            if img.mode in ('RGBA', 'P'):
+                img = img.convert('RGB')
+
+            # Создаем миниатюру 300x300 с сохранением пропорций
+            img.thumbnail((300, 300), Image.LANCZOS)
+
+            # Сжимаем с качеством 75%
+            buffer = BytesIO()
+            img.save(buffer, format='JPEG', quality=75, optimize=True)
+
+            return base64.b64encode(buffer.getvalue()).decode('utf-8')
+
+        except Exception as e:
+            print(f"Image processing error: {e}")
+            return None

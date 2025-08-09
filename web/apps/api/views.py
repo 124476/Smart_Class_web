@@ -149,7 +149,6 @@ class NewsListCreateView(generics.ListCreateAPIView):
 
 class NewsRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.NewsSerializer
-    permission_classes = [permissions.IsAuthenticated]
     lookup_field = 'id'
 
     def get_queryset(self):
