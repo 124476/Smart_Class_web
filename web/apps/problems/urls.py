@@ -1,10 +1,15 @@
-import django.urls
-import django.views.generic
+from django.urls import path
 
-import apps.problems.views
-
+from apps.problems import views
 
 app_name = "problems"
+
 urlpatterns = [
-    django.urls.path("", apps.problems.views.Description.as_view(), name="main"),
+    path("problems/", views.ProblemListView.as_view(), name="problems"),
+    path("problems/add/", views.ProblemCreateView.as_view(), name="problem_add"),
+    path("problems/<int:pk>/edit/", views.ProblemUpdateView.as_view(), name="problem_edit"),
+    path(
+        "problems/<int:pk>/delete/", views.ProblemDeleteView.as_view(), name="problem_delete"
+    ),
+    path('problems/<int:pk>/', views.ProblemDetailView.as_view(), name='problem_detail'),
 ]

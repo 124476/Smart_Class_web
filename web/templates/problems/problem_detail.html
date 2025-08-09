@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="mb-0">{{ problem.name }}</h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <h5>Статус:</h5>
+                        <span class="badge
+                            {% if problem.status %}bg-primary{% else %}bg-secondary{% endif %}">
+                            {{ problem.status.name|default:"Не указан" }}
+                        </span>
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Дата создания:</h5>
+                        <p>{{ problem.created_at|date:"d.m.Y H:i" }}</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    {% if problem.user %}
+                    <div class="mb-3">
+                        <h5>Автор:</h5>
+                        <p>{{ problem.user.get_full_name|default:problem.user.username }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if problem.description %}
+            <div class="mb-3">
+                <h5>Описание проблемы:</h5>
+                <div class="p-3 bg-light rounded">
+                    {{ problem.description|linebreaks }}
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{% url 'problems:problems' %}" class="btn btn-secondary">
+                    ← Назад к списку
+                </a>
+
+                {% if request.user == problem.user or request.user.is_superuser %}
+                <div>
+                    <a href="{% url 'problems:problem_edit' problem.pk %}" class="btn btn-primary">
+                        ✏️ Редактировать
+                    </a>
+                    <a href="{% url 'problems:problem_delete' problem.pk %}" class="btn btn-danger">
+                        🗑️ Удалить
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="card-footer text-muted">
+            Последнее обновление: {{ problem.updated_at|date:"d.m.Y H:i"|default:"Не обновлялось" }}
+        </div>
+    </div>
+</div>
+{% endblock %}

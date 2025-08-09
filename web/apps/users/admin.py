@@ -22,6 +22,10 @@ class UserAdmin(ModelAdmin):
     inlines = (ProfileInline,)
 
 
+@django.contrib.admin.register(users.models.RegistrationToken)
+class RegistrationTokenAdmin(ModelAdmin):
+    pass
+
 django.contrib.admin.site.unregister(
     users.models.User,
 )

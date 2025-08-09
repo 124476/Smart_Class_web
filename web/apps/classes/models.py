@@ -10,12 +10,6 @@ class Class(models.Model):
         verbose_name="Название класса",
         max_length=100,
     )
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="classes",
-        verbose_name="Пользователь",
-    )
 
     def __str__(self):
         return self.name
@@ -48,12 +42,6 @@ class Computer(models.Model):
         on_delete=models.CASCADE,
         related_name="computers",
         verbose_name="Класс",
-    )
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="computers",
-        verbose_name="Пользователь",
     )
     image = models.ImageField(
         "Изображение",

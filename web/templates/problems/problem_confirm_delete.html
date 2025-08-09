@@ -1,0 +1,35 @@
+{% extends "works/base_works.html" %}
+
+{% block works_content %}
+  <div class="card border-danger">
+    <div class="card-header bg-danger text-white">
+      <h2 class="mb-0">Удалить проблему</h2>
+    </div>
+    <div class="card-body">
+      <p class="lead">Вы уверены, что хотите удалить проблему <strong>"{{ object.name }}"</strong>?</p>
+
+      {% if object.description %}
+        <div class="alert alert-warning">
+          <p class="mb-1"><strong>Описание проблемы:</strong></p>
+          <p class="mb-0">{{ object.description }}</p>
+        </div>
+      {% endif %}
+
+      <div class="d-flex justify-content-between align-items-center mt-4">
+        <form method="post" class="mb-0">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger btn-lg">
+            <i class="bi bi-trash-fill"></i> Да, удалить
+          </button>
+        </form>
+
+        <a href="{% url 'problems:problems' %}" class="btn btn-secondary btn-lg">
+          <i class="bi bi-x-circle"></i> Отмена
+        </a>
+      </div>
+    </div>
+    <div class="card-footer text-muted">
+      <small>Это действие нельзя будет отменить</small>
+    </div>
+  </div>
+{% endblock %}

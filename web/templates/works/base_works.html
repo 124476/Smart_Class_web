@@ -21,10 +21,10 @@
                     <span>События</span>
                 </a>
             </li>
-            <li class="{% if request.resolver_match.url_name == 'feedback' %}active{% endif %}">
-                <a href="{% url 'works:feedback' %}">
+            <li class="{% if request.resolver_match.url_name == 'problems' %}active{% endif %}">
+                <a href="{% url 'problems:problems' %}">
                     <i class='bi bi-chat-square-text'></i>
-                    <span>Обратная связь</span>
+                    <span>Технические проблемы</span>
                 </a>
             </li>
         </ul>

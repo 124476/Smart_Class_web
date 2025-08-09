@@ -12,11 +12,6 @@ class Food(models.Model):
         max_digits=10,
         decimal_places=2,
     )
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        verbose_name="Пользователь",
-    )
 
     def __str__(self):
         return f"{self.name} ({self.price}₽)"

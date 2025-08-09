@@ -2,10 +2,21 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-from .models import User, Profile
+
+from apps.users.models import User, Profile, RegistrationToken
 
 
 class SignUpForm(UserCreationForm):
+    registration_token = forms.CharField(
+        label='Регистрационный токен',
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': _('Токен'),
+            'autocomplete': 'email'
+        }),
+        help_text='Введите токен, полученный от администратора'
+    )
     email = forms.EmailField(
         label=_("Email"),
         required=True,
@@ -70,6 +81,17 @@ class SignUpForm(UserCreationForm):
             raise ValidationError(_("Это имя пользователя уже занято."))
         return username
 
+    def clean_registration_token(self):
+        token_value = self.cleaned_data.get('registration_token')
+        try:
+            token = RegistrationToken.objects.get(token=token_value)
+        except RegistrationToken.DoesNotExist:
+            raise ValidationError('Неверный регистрационный токен')
+
+        if not token or not token.is_active:
+            raise ValidationError('Токен уже использован или истек')
+
+        return token_value
 
 class UserUpdateForm(forms.ModelForm):
     class Meta:

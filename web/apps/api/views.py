@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate
 from django.db import models
 
 from apps.news.models import News
-from apps.users.models import User
+from apps.users.models import User, Profile
 from apps.classes.models import Class, Computer
 from apps.api import serializers
 from apps.foods.models import Food, FoodWork
@@ -47,7 +47,6 @@ class LoginAPIView(APIView):
                     "Email": user.email,
                     "Login": user.username,
                     "Image": image_data,
-                    "MainUser": profile.main_user_id,
                     "Birthday": profile.birthday.strftime("%Y-%m-%d") if profile.birthday else None,
                 }
 
@@ -75,23 +74,23 @@ class UserListIfMainUserAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
-        if not User.objects.filter(id=request.user.id, profile__is_main=1).exists():
+        if not User.objects.filter(id=request.user.id, is_superuser=1).exists():
             return Response(
                 {"error": "Вы не являетесь главным пользователем"},
                             status=403,
                             )
 
-        users = User.objects.filter(profile__main_user_id=request.user.id)
+        users = User.objects
         serializer = serializers.UserSerializer(users, many=True)
         return Response(serializer.data)
 
 
 class IsOwnerAndTeacher(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
-        return request.user.profile.is_main
+        return request.user.is_superuser
 
     def has_permission(self, request, view):
-        return request.user.profile.is_main
+        return request.user.is_superuser
 
 
 class ClassViewSet(viewsets.ModelViewSet):
@@ -100,10 +99,10 @@ class ClassViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated, IsOwnerAndTeacher]
 
     def get_queryset(self):
-        return Class.objects.filter(user=self.request.user)
+        return Class.objects
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save()
 
 
 class ComputerViewSet(viewsets.ModelViewSet):
@@ -112,10 +111,10 @@ class ComputerViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated, IsOwnerAndTeacher]
 
     def get_queryset(self):
-        return Computer.objects.filter(user=self.request.user)
+        return Computer.objects
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save()
 
 
 class ComputerByUUIDView(generics.RetrieveAPIView):
@@ -145,7 +144,7 @@ class NewsListCreateView(generics.ListCreateAPIView):
         )
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save()
 
 
 class NewsRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
@@ -166,14 +165,10 @@ class ProblemListCreateView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        user = self.request.user
-        return serializers.Problem.objects.filter(
-            models.Q(user=user) |
-            models.Q(user__id=getattr(user, 'main_user_id', None))
-        )
+        return serializers.Problem.objects
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save()
 
 
 class ProblemRetrieveUpdateView(generics.RetrieveUpdateAPIView):
@@ -182,11 +177,7 @@ class ProblemRetrieveUpdateView(generics.RetrieveUpdateAPIView):
     lookup_field = 'id'
 
     def get_queryset(self):
-        user = self.request.user
-        return serializers.Problem.objects.filter(
-            models.Q(user=user) |
-            models.Q(user__id=getattr(user, 'main_user_id', None))
-        )
+        return serializers.Problem.objects
 
 
 class FoodViewSet(viewsets.ModelViewSet):

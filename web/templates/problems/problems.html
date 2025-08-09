@@ -1,0 +1,76 @@
+{% extends "works/base_works.html" %}
+
+{% block works_content %}
+  <h2>Технические проблемы</h2>
+  <a href="{% url 'problems:problem_add' %}" class="btn btn-success mb-3">➕ Добавить проблему</a>
+
+  <div class="card mb-4">
+    <div class="card-header bg-light">
+      <div class="row">
+        <div class="col-md-6"><strong>Название</strong></div>
+        <div class="col-md-3"><strong>Статус</strong></div>
+        <div class="col-md-3 text-end"><strong>Действия</strong></div>
+      </div>
+    </div>
+
+    <ul class="list-group list-group-flush">
+      {% for problem in problems %}
+        <li class="list-group-item">
+          <div class="row align-items-center">
+            <div class="col-md-6">
+              <strong>{{ problem.name }}</strong>
+              {% if problem.description %}
+                <p class="text-muted small mb-0">{{ problem.description|truncatechars:60 }}</p>
+              {% endif %}
+            </div>
+            <div class="col-md-3">
+              <span class="badge
+                {% if problem.status %}bg-primary{% else %}bg-secondary{% endif %}">
+                {{ problem.status.name|default:"Без статуса" }}
+              </span>
+            </div>
+            <div class="col-md-3 text-end">
+              <div class="btn-group" role="group">
+                <a href="{% url 'problems:problem_detail' problem.pk %}"
+                   class="btn btn-sm btn-outline-primary">Подробнее</a>
+                <a href="{% url 'problems:problem_edit' problem.pk %}"
+                   class="btn btn-sm btn-outline-primary">✏️</a>
+                <a href="{% url 'problems:problem_delete' problem.pk %}"
+                   class="btn btn-sm btn-outline-danger">🗑️</a>
+              </div>
+            </div>
+          </div>
+        </li>
+      {% empty %}
+        <li class="list-group-item text-center py-4">
+          <p class="text-muted">Нет зарегистрированных проблем</p>
+          <a href="{% url 'problems:problem_add' %}" class="btn btn-primary">Создать первую проблему</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  {% if is_paginated %}
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+          </li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+          <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+          </li>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+          </li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}
+{% endblock %}

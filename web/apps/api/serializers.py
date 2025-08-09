@@ -45,7 +45,6 @@ class ClassSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'name',
-            'user',
         ]
 
 
@@ -65,7 +64,6 @@ class ComputerSerializer(serializers.ModelSerializer):
             'is_work',
             'class_obj',
             'class_name',
-            'user',
             'image',
             "photo",
             "created_at",
@@ -96,11 +94,10 @@ class NewsSerializer(serializers.ModelSerializer):
             'name',
             'description',
             'image',
-            'user',
             'created_at',
             "photo",
         ]
-        read_only_fields = ['user', 'created_at']
+        read_only_fields = ['created_at',]
 
     def get_photo(self, obj):
         if obj.image:
@@ -133,16 +130,15 @@ class ProblemSerializer(serializers.ModelSerializer):
             'description',
             'status',
             'status_name',
-            'user',
             'created_at',
         ]
-        read_only_fields = ['user', 'created_at']
+        read_only_fields = ['created_at',]
 
 
 class FoodSerializer(serializers.ModelSerializer):
     class Meta:
         model = Food
-        fields = ['id', 'name', 'price', 'user']
+        fields = ['id', 'name', 'price',]
 
 
 class FoodWorkSerializer(serializers.ModelSerializer):

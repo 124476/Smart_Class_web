@@ -113,18 +113,6 @@ class Profile(django.db.models.Model):
         null=True,
         help_text="Аватарка",
     )
-    is_main = django.db.models.BooleanField(
-        verbose_name="Директор",
-        default=False,
-    )
-    main_user = django.db.models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=django.db.models.CASCADE,
-        related_name="main_user",
-        verbose_name="Директор",
-        blank=True,
-        null=True,
-    )
 
     class Meta:
         verbose_name = "дополнительное поле"
@@ -141,3 +129,22 @@ class Profile(django.db.models.Model):
             crop="center",
             quality=85,
         )
+
+class RegistrationToken(django.db.models.Model):
+    token = django.db.models.CharField(
+        verbose_name="Токен регистрации",
+        max_length=64,
+        unique=True,
+        default=uuid.uuid4,
+    )
+    is_active = django.db.models.BooleanField(
+        verbose_name="Активен",
+        default=True,
+    )
+
+    class Meta:
+        verbose_name = "токен регистрации"
+        verbose_name_plural = "токены регистрации"
+
+    def __str__(self):
+        return str(self.token)

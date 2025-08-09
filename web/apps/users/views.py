@@ -8,7 +8,7 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 
 from apps.users.forms import SignUpForm, UserUpdateForm, ProfileUpdateForm
-from apps.users.models import Profile
+from apps.users.models import Profile, RegistrationToken
 
 
 class RegisterView(View):
@@ -21,8 +21,18 @@ class RegisterView(View):
     def post(self, request):
         form = SignUpForm(request.POST)
         if form.is_valid():
+            token_value = form.cleaned_data['registration_token']
+            token = RegistrationToken.objects.get(token=token_value)
+
+            if not token:
+                form.add_error('registration_token', 'Токен уже использован или истек')
+                return render(request, self.template_name, {'form': form})
+
             user = form.save()
             Profile.objects.create(user=user)
+
+            token.is_active = False
+            token.save()
             login(request, user)
             return redirect('homepage:main')
 
