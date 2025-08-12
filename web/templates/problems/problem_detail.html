@@ -36,23 +36,23 @@
             {% if problem.description %}
             <div class="mb-3">
                 <h5>Описание проблемы:</h5>
-                <div class="p-3 bg-light rounded">
+                <div class="p-3 rounded">
                     {{ problem.description|linebreaks }}
                 </div>
             </div>
             {% endif %}
 
             <div class="d-flex justify-content-between mt-4">
-                <a href="{% url 'problems:problems' %}" class="btn btn-secondary">
+                <a href="{% url 'problems:problems' %}" class="btn btn-secondary text-light">
                     ← Назад к списку
                 </a>
 
                 {% if request.user == problem.user or request.user.is_superuser %}
                 <div>
-                    <a href="{% url 'problems:problem_edit' problem.pk %}" class="btn btn-primary">
+                    <a href="{% url 'problems:problem_edit' problem.pk %}" class="btn btn-primary text-light">
                         ✏️ Редактировать
                     </a>
-                    <a href="{% url 'problems:problem_delete' problem.pk %}" class="btn btn-danger">
+                    <a href="{% url 'problems:problem_delete' problem.pk %}" class="btn btn-danger text-light">
                         🗑️ Удалить
                     </a>
                 </div>

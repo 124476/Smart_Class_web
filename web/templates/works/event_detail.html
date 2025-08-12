@@ -21,19 +21,19 @@
 
             <div class="d-flex justify-content-between mt-4">
                 {% if request.user.is_authenticated %}
-                <a href="{% url 'works:events' %}" class="btn btn-secondary">
+                <a href="{% url 'works:events' %}" class="btn btn-secondary text-light">
                     ← Назад к списку
                 </a>
                 {% else %}
-                <a href="{% url 'homepage:calendar' %}" class="btn btn-secondary">
+                <a href="{% url 'homepage:calendar' %}" class="btn btn-secondary text-light">
                     ← Назад к календарю
                 </a>
                 {% endif %}
                 <div>
-                    <a href="{% url 'works:event_edit' event.pk %}" class="btn btn-primary">
+                    <a href="{% url 'works:event_edit' event.pk %}" class="btn btn-primary text-light">
                         ✏️ Редактировать
                     </a>
-                    <a href="{% url 'works:event_delete' event.pk %}" class="btn btn-danger">
+                    <a href="{% url 'works:event_delete' event.pk %}" class="btn btn-danger text-light">
                         🗑️ Удалить
                     </a>
                 </div>

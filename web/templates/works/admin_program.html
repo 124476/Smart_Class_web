@@ -1,0 +1,73 @@
+{% extends "works/base_works.html" %}
+{% load static %}
+
+{% block title %}Админ-программа для управления ПК{% endblock %}
+
+{% block works_content %}
+
+<div class="container mt-5">
+  <div class="text-center mb-4">
+    <h1 class="display-4 fw-bold text-primary">Админ-панель управления</h1>
+    <p class="text-muted">Программа для удалённого контроля компьютеров в классе</p>
+  </div>
+
+  <div class="row justify-content-center mb-4">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body text-center">
+          <h3 class="card-title text-primary">School PC Admin</h3>
+          <p class="card-text">
+            Программа для администратора. Позволяет управлять всеми компьютерами, подключёнными к системе.
+          </p>
+          <a href="{% static 'software/SchoolPCAdmin.exe' %}" download="true" class="btn btn-primary btn-lg mt-3">
+            <i class="fas fa-download me-2"></i> Скачать админ-панель
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow">
+    <div class="card-body">
+      <h2 class="text-primary">Функционал программы</h2>
+      <ul>
+        <li>
+          <strong>Просмотр всех компьютеров:</strong>
+          Список подключённых устройств с их UUID и статусом.
+        </li>
+        <li>
+          <strong>Удалённое управление:</strong>
+          Блокировка экрана, запуск/завершение процессов, отправка сообщений.
+        </li>
+        <li>
+          <strong>Мониторинг активности:</strong>
+          Графики использования ресурсов (CPU, RAM, сеть).
+        </li>
+        <li>
+          <strong>Генерация отчётов:</strong>
+          Экспорт данных о сеансах в CSV или PDF.
+        </li>
+      </ul>
+
+      <h2 class="text-primary mt-4">Как использовать</h2>
+      <ol>
+        <li>Скачайте и установите программу на учительский компьютер.</li>
+        <li>Запустите и авторизуйтесь под учётной записью администратора.</li>
+        <li>Подключитесь к локальной сети школы.</li>
+        <li>Компьютеры с установленной клиентской программой появятся в списке автоматически.</li>
+      </ol>
+
+      <div class="alert alert-warning mt-4">
+        <strong>Важно:</strong> Для работы требуется, чтобы на ученических ПК была запущена клиентская программа.
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center mt-4">
+    <a href="/" class="btn btn-outline-primary">
+      <i class="fas fa-arrow-left me-2"></i> Вернуться на главную
+    </a>
+  </div>
+</div>
+
+{% endblock %}

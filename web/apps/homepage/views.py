@@ -113,3 +113,33 @@ class CalendarView(django.views.generic.TemplateView):
         })
 
         return context
+
+
+class Games(django.views.generic.ListView):
+    template_name = "homepage/games.html"
+    context_object_name = "items"
+    queryset = [
+        {
+            "id": 1,
+            "name": "first",
+        },
+        {
+            "id": 2,
+            "name": "second",
+        },
+    ]
+
+
+class Program(django.views.generic.ListView):
+    template_name = "homepage/school_program.html"
+    context_object_name = "items"
+    queryset = [
+        {
+            "id": 1,
+            "name": "first",
+        },
+        {
+            "id": 2,
+            "name": "second",
+        },
+    ]

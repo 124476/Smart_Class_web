@@ -1,16 +1,21 @@
 from django.urls import path
 
-from apps.works import views
+from apps.works.views import DashboardView, EventListView, EventCreateView, \
+    EventUpdateView, EventDeleteView, EventDetailView, AdminProgramView
 
 app_name = "works"
 
 urlpatterns = [
-    path("", views.DashboardView.as_view(), name="dashboard"),
-    path("events/", views.EventListView.as_view(), name="events"),
-    path("events/add/", views.EventCreateView.as_view(), name="event_add"),
-    path("events/<int:pk>/edit/", views.EventUpdateView.as_view(), name="event_edit"),
+    path("", DashboardView.as_view(), name="dashboard"),
+    path("events/", EventListView.as_view(), name="events"),
+    path("events/add/", EventCreateView.as_view(), name="event_add"),
+    path("events/<int:pk>/edit/", EventUpdateView.as_view(),
+         name="event_edit"),
     path(
-        "events/<int:pk>/delete/", views.EventDeleteView.as_view(), name="event_delete"
+        "events/<int:pk>/delete/", EventDeleteView.as_view(),
+        name="event_delete",
     ),
-    path('events/<int:pk>/', views.EventDetailView.as_view(), name='event_detail'),
+    path('events/<int:pk>/', EventDetailView.as_view(), name='event_detail'),
+    path('events/admin_program/', AdminProgramView.as_view(),
+         name='admin_program'),
 ]

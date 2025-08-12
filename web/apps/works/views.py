@@ -88,3 +88,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         context["completed_events"] = events.filter(date__lt=timezone.now()).count()
         context["next_event"] = events.filter(date__gte=timezone.now()).first()
         return context
+
+
+class AdminProgramView(LoginRequiredMixin, TemplateView):
+    template_name = "works/admin_program.html"

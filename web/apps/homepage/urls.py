@@ -1,9 +1,11 @@
 from django.urls import path
 
-import apps.homepage.views
+from apps.homepage.views import Home, CalendarView, Games, Program
 
 app_name = "homepage"
 urlpatterns = [
-    path("", apps.homepage.views.Home.as_view(), name="main"),
-    path("calendar/", apps.homepage.views.CalendarView.as_view(), name="calendar"),
+    path("", Home.as_view(), name="main"),
+    path("calendar/", CalendarView.as_view(), name="calendar"),
+    path("games/", Games.as_view(), name="games"),
+    path("program/", Program.as_view(), name="program")
 ]

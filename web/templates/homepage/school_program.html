@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load active_link_tags %}
+{% load static %}
+
+{% block title %}Программа для управления ПК{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+  <div class="text-center mb-4">
+    <h1 class="display-4 fw-bold text-primary">Программа для управления ПК</h1>
+    <p class="text-muted">Скачайте программу для удалённого управления компьютерами в классе</p>
+  </div>
+
+  <div class="row justify-content-center mb-4">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body text-center">
+          <h3 class="card-title text-primary">Школьный контролер для пк</h3>
+          <p class="card-text">
+            Программа для управления компьютерами в школьном классе. Позволяет администратору удалённо контролировать устройства.
+          </p>
+          <a href="{% static 'class_work/SetupSmartClassClient.exe' %}" download="true" class="btn btn-primary btn-lg mt-3 text-light">
+            <i class="fas fa-download me-2"></i>Скачать программу
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow">
+    <div class="card-body">
+      <h2 class="text-primary">Функционал программы</h2>
+      <ul>
+        <li>
+          <strong>Поле для ввода UUID компьютера:</strong>
+          Используется для задания или изменения уникального идентификатора компьютера.
+        </li>
+        <li>
+          <strong>Кнопка 'Сохранить':</strong>
+          Сохраняет введённый UUID.
+        </li>
+        <li>
+          <strong>Кнопка 'Добавить в автозагрузку':</strong>
+          Позволяет включить/отключить автозапуск программы.
+        </li>
+        <li>
+          <strong>Фоновый режим:</strong>
+          Программа может работать в фоне, обеспечивая постоянный мониторинг устройства.
+        </li>
+      </ul>
+
+      <h2 class="text-primary mt-4">Как использовать</h2>
+      <ol>
+        <li>Скачайте и установите программу на каждый компьютер в классе.</li>
+        <li>Введите уникальный UUID для каждого ПК (можно найти в панели администратора).</li>
+        <li>Настройте автозапуск, если необходимо.</li>
+        <li>Управляйте компьютерами через веб-интерфейс администратора.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="text-center my-4">
+    <a href="{% url 'homepage:main' %}" class="btn btn-outline-primary">
+      <i class="fas fa-arrow-left me-2"></i>На главную
+    </a>
+  </div>
+</div>
+
+{% endblock %}
