@@ -13,8 +13,7 @@
       <a href="{% url 'homepage:calendar' %}" class="nav-link fw-medium {% if request.resolver_match.view_name == 'homepage:calendar' %}choose{% endif %}">Календарь</a>
       <a href="{% url 'news:main' %}" class="nav-link fw-medium {% if request.resolver_match.view_name == 'news:main' %}choose{% endif %}">Новости</a>
       <a href="{% url 'about:main' %}" class="nav-link fw-medium {% if request.resolver_match.view_name == 'about:main' %}choose{% endif %}">О нас</a>
-      <a href="{% url 'homepage:program' %}" class="nav-link fw-medium {% if request.resolver_match.view_name == 'homepage:program' %}choose{% endif %}">Программа</a>
-      <a href="{% url 'homepage:games' %}" class="nav-link fw-medium {% if request.resolver_match.view_name == 'homepage:games' %}choose{% endif %}">Наши игры</a>
+      <a href="{% url 'homepage:games' %}" class="nav-link fw-medium {% if request.resolver_match.view_name == 'homepage:games' %}choose{% endif %}">Программы</a>
     </nav>
 
     <div class="d-flex align-items-center gap-3">
