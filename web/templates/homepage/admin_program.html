@@ -3,71 +3,284 @@
 
 {% block title %}Админ-программа для управления ПК{% endblock %}
 
+{% block extra_css %}
+<style>
+    .feature-card {
+        transition: transform 0.3s, box-shadow 0.3s;
+        border-radius: 12px;
+        overflow: hidden;
+        height: 100%;
+    }
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+    }
+    .nav-tabs .nav-link {
+        color: #495057;
+        font-weight: 500;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 8px 8px 0 0;
+    }
+    .nav-tabs .nav-link.active {
+        color: #0d6efd;
+        background-color: rgba(13, 110, 253, 0.1);
+        border: none;
+        font-weight: 600;
+    }
+    .screenshot-container {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    }
+    .step-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        background-color: #0d6efd;
+        color: white;
+        border-radius: 50%;
+        margin-right: 10px;
+        font-weight: bold;
+    }
+    .download-btn {
+        border-radius: 8px;
+        padding: 12px 24px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+    .download-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 
-<div class="container mt-5">
-  <div class="text-center mb-4">
-    <h1 class="display-4 fw-bold text-primary">Админ-панель управления</h1>
-    <p class="text-muted">Программа для удалённого контроля компьютеров в классе</p>
-  </div>
+<div class="container py-5">
+    <!-- Заголовок -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-primary mb-3">Админ-панель управления</h1>
+        <p class="lead text-muted">Мощный инструмент для удалённого контроля компьютеров в учебном классе</p>
+    </div>
 
-  <div class="row justify-content-center mb-4">
-    <div class="col-md-6">
-      <div class="card shadow-sm">
-        <div class="card-body text-center">
-          <h3 class="card-title text-primary">School PC Admin</h3>
-          <p class="card-text">
-            Программа для администратора. Позволяет управлять всеми компьютерами, подключёнными к системе.
-          </p>
-          <a href="{% static 'class_work/SmartClassAdmin-setup.exe' %}" download="true" class="btn btn-primary btn-lg mt-3">
-            <i class="fas fa-download me-2"></i> Скачать админ-панель
-          </a>
+    <!-- Карточка загрузки -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-8">
+            <div class="card feature-card shadow-sm border-0">
+                <div class="card-body p-4 text-center">
+                    <div class="mb-4">
+                        <i class="fas fa-desktop fa-3x text-primary mb-3"></i>
+                        <h3 class="card-title text-primary">School PC Admin</h3>
+                        <p class="card-text text-muted">
+                            Профессиональное решение для администраторов учебных классов.
+                            Полный контроль над подключёнными компьютерами.
+                        </p>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                        <a href="{% static 'class_work/Документация по работе с admin.docx' %}" download="true" class="btn btn-primary download-btn me-md-2 text-light">
+                            <i class="fas fa-file-alt me-2"></i> Документация
+                        </a>
+                        <a href="{% static 'class_work/SmartClassAdmin-setup.exe' %}" download="true" class="btn btn-success download-btn text-light">
+                            <i class="fas fa-download me-2"></i> Скачать программу
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 
-  <div class="card shadow">
-    <div class="card-body">
-      <h2 class="text-primary">Функционал программы</h2>
-      <ul>
-        <li>
-          <strong>Просмотр всех компьютеров:</strong>
-          Список подключённых устройств с их UUID и статусом.
-        </li>
-        <li>
-          <strong>Удалённое управление:</strong>
-          Блокировка экрана, запуск/завершение процессов, отправка сообщений.
-        </li>
-        <li>
-          <strong>Мониторинг активности:</strong>
-          Графики использования ресурсов (CPU, RAM, сеть).
-        </li>
-        <li>
-          <strong>Генерация отчётов:</strong>
-          Экспорт данных о сеансах в CSV или PDF.
-        </li>
-      </ul>
+    <!-- Вкладки с информацией -->
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <ul class="nav nav-tabs mb-4" id="adminTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="features-tab" data-bs-toggle="tab" data-bs-target="#features" type="button" role="tab">Функционал</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="screenshots-tab" data-bs-toggle="tab" data-bs-target="#screenshots" type="button" role="tab">Скриншоты</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="instructions-tab" data-bs-toggle="tab" data-bs-target="#instructions" type="button" role="tab">Инструкция</button>
+                </li>
+            </ul>
 
-      <h2 class="text-primary mt-4">Как использовать</h2>
-      <ol>
-        <li>Скачайте и установите программу на учительский компьютер.</li>
-        <li>Запустите и авторизуйтесь под учётной записью администратора.</li>
-        <li>Подключитесь к локальной сети школы.</li>
-        <li>Компьютеры с установленной клиентской программой появятся в списке автоматически.</li>
-      </ol>
+            <div class="tab-content" id="adminTabsContent">
+                <!-- Вкладка с функционалом -->
+                <div class="tab-pane fade show active" id="features" role="tabpanel">
+                    <div class="card shadow border-0">
+                        <div class="card-body p-4">
+                            <h3 class="text-primary mb-4">Возможности программы</h3>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="d-flex">
+                                        <div class="me-3 text-primary">
+                                            <i class="fas fa-list-alt fa-2x"></i>
+                                        </div>
+                                        <div>
+                                            <h5>Просмотр всех компьютеров</h5>
+                                            <p class="text-muted mb-0">Полный список подключённых устройств с их UUID, именами и статусом в реальном времени.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="d-flex">
+                                        <div class="me-3 text-primary">
+                                            <i class="fas fa-lock fa-2x"></i>
+                                        </div>
+                                        <div>
+                                            <h5>Блокировка экрана</h5>
+                                            <p class="text-muted mb-0">Удалённая блокировка экранов выбранных компьютеров для привлечения внимания учащихся.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="d-flex">
+                                        <div class="me-3 text-primary">
+                                            <i class="fas fa-cogs fa-2x"></i>
+                                        </div>
+                                        <div>
+                                            <h5>Управление процессами</h5>
+                                            <p class="text-muted mb-0">Управление элементами экосистемы "Умная школа": управление товарами и расписанием столовой, просмотр технических проблем и новостей и т.д.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="d-flex">
+                                        <div class="me-3 text-primary">
+                                            <i class="fas fa-solid fa-chart-area fa-2x"></i>
+                                        </div>
+                                        <div>
+                                            <h5>Школьная статистика</h5>
+                                            <p class="text-muted mb-0">Возможность просматривать статистику внутри школьной экосистемы.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="d-flex">
+                                        <div class="me-3 text-primary">
+                                            <i class="fas fa-chart-bar fa-2x"></i>
+                                        </div>
+                                        <div>
+                                            <h5>Мониторинг активности</h5>
+                                            <p class="text-muted mb-0">Отслеживание активности учащихся в реальном времени с подробной статистикой.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="d-flex">
+                                        <div class="me-3 text-primary">
+                                            <i class="fas fa-power-off fa-2x"></i>
+                                        </div>
+                                        <div>
+                                            <h5>Удалённое выключение</h5>
+                                            <p class="text-muted mb-0">Возможность удалённого выключения или перезагрузки компьютеров в классе.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-      <div class="alert alert-warning mt-4">
-        <strong>Важно:</strong> Для работы требуется, чтобы на ученических ПК была запущена клиентская программа.
-      </div>
+                <div class="tab-pane fade" id="screenshots" role="tabpanel">
+                    <div class="card shadow border-0">
+                        <div class="card-body p-4">
+                            <h3 class="text-primary mb-4">Скриншоты приложения</h3>
+                            <p class="text-muted mb-4">Ознакомьтесь с интерфейсом админ-панели управления</p>
+
+                            <div class="screenshot-container mb-4">
+                                <img src="{% static 'img/smartschoolmobile1.jpg' %}" class="img-fluid w-100 rounded" alt="Скриншот 1">
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="screenshot-container">
+                                        <img src="{% static 'img/smartschoolmobile2.jpg' %}" class="img-fluid w-100 rounded" alt="Скриншот 2">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="screenshot-container">
+                                        <img src="{% static 'img/smartschoolmobile3.jpg' %}" class="img-fluid w-100 rounded" alt="Скриншот 3">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="instructions" role="tabpanel">
+                    <div class="card shadow border-0">
+                        <div class="card-body p-4">
+                            <h3 class="text-primary mb-4">Как использовать программу</h3>
+
+                            <div class="mb-4">
+                                <h5><span class="step-number">1) </span>Установка и настройка</h5>
+                                <p class="text-muted ms-5">Скачайте и установите программу на учительский компьютер. Запустите установочный файл и следуйте инструкциям мастера установки.</p>
+                            </div>
+
+                            <div class="mb-4">
+                                <h5><span class="step-number">2) </span>Авторизация</h5>
+                                <p class="text-muted ms-5">Запустите программу и авторизуйтесь под учётной записью администратора.</p>
+                            </div>
+
+                            <div class="mb-4">
+                                <h5><span class="step-number">3) </span>Подключение компьютеров</h5>
+                                <p class="text-muted ms-5">Убедитесь, что на всех ученических компьютерах установлена клиентская часть программы. Вы должны будете добавить их через uuid из клиентской программы.</p>
+                            </div>
+
+                            <div class="mb-4">
+                                <h5><span class="step-number">4) </span>Использование функций управления</h5>
+                                <p class="text-muted ms-5">Выберите нужные компьютеры в списке и используйте панель управления для выполнения необходимых действий: блокировка, отправка сообщений, управление процессами и т.д.</p>
+                            </div>
+
+                            <div class="alert alert-warning mt-4">
+                                <div class="d-flex">
+                                    <div class="me-3">
+                                        <i class="fas fa-exclamation-circle fa-2x"></i>
+                                    </div>
+                                    <div>
+                                        <strong>Важно:</strong> Для работы программы требуется авторизация под учётной записью администратора.
+                                        Убедитесь, что брандмауэр не блокирует сетевое взаимодействие между компьютерами.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <div class="text-center mt-4 mb-4">
-    <a href="{% url 'homepage:programs' %}" class="btn btn-outline-primary">
-      <i class="fas fa-arrow-left me-2"></i>Назад
-    </a>
-  </div>
+    <div class="text-center mt-5">
+        <a href="{% url 'homepage:programs' %}" class="btn btn-outline-primary px-4">
+            <i class="fas fa-arrow-left me-2"></i>Назад к списку программ
+        </a>
+    </div>
 </div>
 
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
+
+    document.getElementById('adminTabs').addEventListener('click', function(e) {
+        if (e.target.tagName === 'BUTTON') {
+            setTimeout(function() {
+                window.scrollTo({
+                    top: document.getElementById('adminTabs').offsetTop - 20,
+                    behavior: 'smooth'
+                });
+            }, 50);
+        }
+    });
+</script>
 {% endblock %}

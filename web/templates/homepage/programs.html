@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load active_link_tags %}
+{% load static %}
+
+{% block title %}Программы{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4 mb-4">
+  <div class="row g-4">
+    <div class="col-4">
+      <div class="card h-100 shadow-sm">
+        <img src="/static/img/mobile.png" class="card-img-top" alt="Entangled Tale" >
+        <div class="card-body">
+          <h5 class="card-title">Мобильное приложение "Умная школа"</h5>
+          <p class="card-text">
+            Мобильное приложение "Умная школа" направлено на подготовку к егэ. Собраны задания фипи.
+          </p>
+          <a href="{% static 'class_work/SmartSchoolMobile.apk' %}" download="true" class="btn btn-primary text-light">Скачать</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card h-100 shadow-sm">
+        <img src="/static/img/smartclassclient.png" class="card-img-top" alt="Entangled Tale" >
+        <div class="card-body">
+          <h5 class="card-title">Клиент-программа "Умная школа"</h5>
+          <p class="card-text">
+            Программа "Умная школа" направлена на работу со школьными компьютерами на удаленном расстоянии. Устанавливается на компьютер ученика.
+          </p>
+          <a href="{% url 'homepage:school_program' %}" class="btn btn-primary text-light">Подробнее</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card h-100 shadow-sm">
+        <img src="/static/img/smartclassadmin.png" class="card-img-top" alt="Entangled Tale" >
+        <div class="card-body">
+          <h5 class="card-title">Админ-программа "Умная школа"</h5>
+          <p class="card-text">
+            Программа "Умная школа" направлена на работу со школьными компьютерами на удаленном расстоянии. Устанавливается на компьютер учителя.
+          </p>
+          <a href="{% url 'homepage:admin_program' %}" class="btn btn-primary text-light">Подробнее</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card h-100 shadow-sm">
+        <img src="/static/img/entangled_tale.png" class="card-img-top" alt="Entangled Tale" >
+        <div class="card-body">
+          <h5 class="card-title">Entangled Tale</h5>
+          <p class="card-text">
+            Entangled Tale - это увлекательная игра про человека, который загадочным образом попал в подземный мир с магами различных наук, которые раньше жили в мире с людьми, но за годы они начали враждовать и забыли те былые времена новой ненавистью.
+          </p>
+          <a href="{% static 'games/Entangled_Tale_setup.exe' %}" download="true" class="btn btn-primary text-light">Скачать</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card h-100 shadow-sm">
+        <img src="/static/img/tatarlango.png" class="card-img-top" alt="Tatarlango">
+        <div class="card-body">
+          <h5 class="card-title">Tatarlango</h5>
+          <p class="card-text">
+            Tatarlango - это увлекательная игра про изучение татарского путём различных вопросов в виде викторины. Но в ней так же можно прокачиваться и развиваться. Главная же цель этой игры - полностью собрать башню сююмбике, достопримечательность казанского кремля.</p>
+          <a href="{% static 'games/Tatarlango_setup.exe' %}" download="true" class="btn btn-primary text-light">Скачать</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card h-100 shadow-sm">
+        <img src="/static/img/mahjong_chemistry.png" class="card-img-top" alt="Mahjong Chemistry">
+        <div class="card-body">
+          <h5 class="card-title">Mahjong Chemistry</h5>
+          <p class="card-text">Mahjong Chemistry — это уникальная версия классической игры маджонг, объединённая с химией. Собирайте пары плиток, представляющих химические элементы и их свойства, чтобы очищать игровое поле. Скачивать ничего не надо, просто перейдите по ссылке и играйте прямо в браузере. <b>Нужно подключение к интернету!</b></p>
+          <a href="https://mahjongchemistry.pythonanywhere.com " class="btn btn-primary text-light">Играть</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
