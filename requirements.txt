@@ -8,3 +8,4 @@ drf-extra-fields==3.7.0
 sorl-thumbnail==12.11.0
 pillow==10.4.0
 requests==2.32.4
+gunicorn==23.0.0
