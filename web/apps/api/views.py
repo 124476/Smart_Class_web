@@ -48,6 +48,7 @@ class LoginAPIView(APIView):
                     "Login": user.username,
                     "Image": image_data,
                     "Birthday": profile.birthday.strftime("%Y-%m-%d") if profile.birthday else None,
+                    "IsSuperUser": user.is_superuser,
                 }
 
                 return Response(response_data)
