@@ -16,7 +16,9 @@
     <script src='{% static "js/custom.js" %}'></script>
     <script src='{% static "js/chart.js" %}'></script>
     {% block js %} {% endblock %}
-    <link rel="icon" type="image" href='{% static "/img/logo.png" %}'/>
+    <link rel="icon" type="image/png" href='{% static "img/logo.png" %}'>
+    <link rel="shortcut icon" href='{% static "img/logo.png" %}'>
+    <link rel="apple-touch-icon" href='{% static "img/logo.png" %}'>
   </head>
   <body class="d-flex flex-column min-vh-100">
     {% include "includes/header.html" %}
