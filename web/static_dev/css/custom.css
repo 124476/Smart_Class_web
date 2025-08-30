@@ -88,6 +88,7 @@ body[data-bs-theme="dark"] a {
 
 .nav-link {
   transition: color 0.3s ease;
+  transform: none !important;
 }
 
 .nav-link:hover {
@@ -95,7 +96,20 @@ body[data-bs-theme="dark"] a {
 }
 
 .dropdown-menu {
-  transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out !important;
+    transform: translateY(-10px) scale(0.95) !important;
+    opacity: 0 !important;
+    display: block !important;
+    pointer-events: none !important;
+    top: 100% !important;
+    left: auto !important;
+    right: 0 !important;
+}
+
+.dropdown-menu.show {
+    transform: translateY(0) scale(1) !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
 }
 
 .backdrop-blur {
