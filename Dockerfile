@@ -1,6 +1,6 @@
 FROM python:3.10-slim
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src/app/web
 
 COPY ./requirements.txt ./
 RUN pip install -r requirements.txt
