@@ -133,8 +133,12 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static_dev"]
 STATIC_ROOT = BASE_DIR / "static"
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+if DEBUG:
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = BASE_DIR / "media"
+else:
+    MEDIA_URL = f"https://{os.getenv("AWS_STORAGE_BUCKET_NAME", "smart-class-media")}.storage.yandexcloud.net/"
+    MEDIA_ROOT = None
 
 LANGUAGES = [
     ("en", _("English")),
@@ -162,3 +166,24 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     ],
 }
+
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        "OPTIONS": {
+            "bucket_name": os.getenv("AWS_STORAGE_BUCKET_NAME", "smart-class-media"),
+            "endpoint_url": "https://storage.yandexcloud.net",
+        },
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
+
+AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME", "smart-class-media")
+AWS_S3_ENDPOINT_URL = "https://storage.yandexcloud.net"
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
