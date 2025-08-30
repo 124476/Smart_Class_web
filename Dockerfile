@@ -9,10 +9,10 @@ COPY . .
 ENV PYTHONPATH=/usr/src/app/web
 
 CMD ["sh", "-c", "\
-  python web/manage.py migrate --noinput && \
-  python web/manage.py flush --noinput && \
-  python web/manage.py loaddata web/fixtures/data.json && \
-  echo \"from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin@example.com', 'admin123') if not User.objects.filter(username='admin').exists() else None\" | python web/manage.py shell && \
-  python web/manage.py collectstatic --noinput && \
-  gunicorn web.wsgi:application --bind 0.0.0.0:8000\
+  python manage.py migrate --noinput && \
+  python manage.py flush --noinput && \
+  python manage.py loaddata fixtures/data.json && \
+  echo \"from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin@example.com', 'admin123') if not User.objects.filter(username='admin').exists() else None\" | python manage.py shell && \
+  python manage.py collectstatic --noinput && \
+  gunicorn wsgi:application --bind 0.0.0.0:8000\
 "]
