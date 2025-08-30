@@ -12,7 +12,7 @@ CMD ["sh", "-c", "\
   python web/manage.py migrate --noinput && \
   python web/manage.py flush --noinput && \
   python web/manage.py loaddata web/fixtures/data.json && \
-  python web/manage.py createsuperuser --username admin --email admin@example.com --password adminpassword && \
+  echo \"from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin@example.com', 'admin123') if not User.objects.filter(username='admin').exists() else None\" | python web/manage.py shell && \
   python web/manage.py collectstatic --noinput && \
   gunicorn web.wsgi:application --bind 0.0.0.0:8000\
 "]
