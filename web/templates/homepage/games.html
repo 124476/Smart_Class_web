@@ -28,7 +28,7 @@
           <p class="card-text">
             Программа "Умная школа" направлена на работу со школьными компьютерами на удаленном расстоянии. Устанавливается на компьютер ученика.
           </p>
-          <a href="{% static 'class_work/SetupSmartClassClient.exe' %}" download="true" class="btn btn-primary">Скачать</a>
+          <a href="{% url 'homepage:school_program' %}" class="btn btn-primary">Подробнее</a>
         </div>
       </div>
     </div>
@@ -40,7 +40,7 @@
           <p class="card-text">
             Программа "Умная школа" направлена на работу со школьными компьютерами на удаленном расстоянии. Устанавливается на компьютер учителя.
           </p>
-          <a href="{% static 'class_work/SetupDemoSmartClass.exe' %}" download="true" class="btn btn-primary">Скачать</a>
+          <a href="{% url 'homepage:admin_program' %}" class="btn btn-primary">Подробнее</a>
         </div>
       </div>
     </div>

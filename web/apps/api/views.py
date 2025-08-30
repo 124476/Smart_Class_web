@@ -3,9 +3,8 @@ __all__ = ()
 import base64
 
 from rest_framework.authentication import BasicAuthentication
-from rest_framework.decorators import action
 from rest_framework.views import APIView
-from rest_framework.response import Response
+from rest_framework.pagination import Response, PageNumberPagination
 from rest_framework import status, viewsets, permissions, generics
 from django.contrib.auth import authenticate
 from django.db import models
@@ -214,12 +213,14 @@ class TopicViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 100
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
+
+
 class SubsectionViewSet(viewsets.ModelViewSet):
     queryset = Subsection.objects.all()
     serializer_class = serializers.SubsectionSerializer
-    http_method_names = ['get']  # Разрешаем только GET-запросы
-
-    def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+    http_method_names = ['get']
+    pagination_class = StandardResultsSetPagination

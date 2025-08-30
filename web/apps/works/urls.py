@@ -1,7 +1,7 @@
 from django.urls import path
 
 from apps.works.views import DashboardView, EventListView, EventCreateView, \
-    EventUpdateView, EventDeleteView, EventDetailView, AdminProgramView
+    EventUpdateView, EventDeleteView, EventDetailView
 
 app_name = "works"
 
@@ -16,6 +16,4 @@ urlpatterns = [
         name="event_delete",
     ),
     path('events/<int:pk>/', EventDetailView.as_view(), name='event_detail'),
-    path('events/admin_program/', AdminProgramView.as_view(),
-         name='admin_program'),
 ]

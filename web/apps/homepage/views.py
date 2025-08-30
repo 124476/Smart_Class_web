@@ -143,3 +143,7 @@ class Program(django.views.generic.ListView):
             "name": "second",
         },
     ]
+
+
+class AdminProgram(django.views.generic.TemplateView):
+    template_name = "homepage/admin_program.html"

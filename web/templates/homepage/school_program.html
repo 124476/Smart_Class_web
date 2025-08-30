@@ -20,7 +20,7 @@
           <p class="card-text">
             Программа для управления компьютерами в школьном классе. Позволяет администратору удалённо контролировать устройства.
           </p>
-          <a href="{% static 'class_work/SetupSmartClassClient.exe' %}" download="true" class="btn btn-primary btn-lg mt-3 text-light">
+          <a href="{% static 'class_work/SmartClassClient-setup.exe' %}" download="true" class="btn btn-primary btn-lg mt-3 text-light">
             <i class="fas fa-download me-2"></i>Скачать программу
           </a>
         </div>
@@ -61,8 +61,8 @@
   </div>
 
   <div class="text-center my-4">
-    <a href="{% url 'homepage:main' %}" class="btn btn-outline-primary">
-      <i class="fas fa-arrow-left me-2"></i>На главную
+    <a href="{% url 'homepage:programs' %}" class="btn btn-outline-primary">
+      <i class="fas fa-arrow-left me-2"></i>Назад
     </a>
   </div>
 </div>

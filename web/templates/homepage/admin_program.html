@@ -1,9 +1,9 @@
-{% extends "works/base_works.html" %}
+{% extends "base.html" %}
 {% load static %}
 
 {% block title %}Админ-программа для управления ПК{% endblock %}
 
-{% block works_content %}
+{% block content %}
 
 <div class="container mt-5">
   <div class="text-center mb-4">
@@ -19,7 +19,7 @@
           <p class="card-text">
             Программа для администратора. Позволяет управлять всеми компьютерами, подключёнными к системе.
           </p>
-          <a href="{% static 'software/SchoolPCAdmin.exe' %}" download="true" class="btn btn-primary btn-lg mt-3">
+          <a href="{% static 'class_work/SmartClassAdmin-setup.exe' %}" download="true" class="btn btn-primary btn-lg mt-3">
             <i class="fas fa-download me-2"></i> Скачать админ-панель
           </a>
         </div>
@@ -63,9 +63,9 @@
     </div>
   </div>
 
-  <div class="text-center mt-4">
-    <a href="/" class="btn btn-outline-primary">
-      <i class="fas fa-arrow-left me-2"></i> Вернуться на главную
+  <div class="text-center mt-4 mb-4">
+    <a href="{% url 'homepage:programs' %}" class="btn btn-outline-primary">
+      <i class="fas fa-arrow-left me-2"></i>Назад
     </a>
   </div>
 </div>
