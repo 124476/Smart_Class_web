@@ -206,7 +206,7 @@
         <form method="post" action="{% url 'users:login' %}" class="auth-form">
           {% csrf_token %}
           <h1>Вход</h1>
-          <span>используйте email и пароль</span>
+          <span>используйте логин и пароль</span>
 
           <input name="username" placeholder="Логин" required>
           <input type="password" name="password" placeholder="Пароль" required>
