@@ -137,7 +137,7 @@ if DEBUG:
     MEDIA_URL = "/media/"
     MEDIA_ROOT = BASE_DIR / "media"
 else:
-    MEDIA_URL = f"https://{os.getenv("AWS_STORAGE_BUCKET_NAME", "smart-class-media")}.storage.yandexcloud.net/"
+    MEDIA_URL = f"https://{os.getenv('AWS_STORAGE_BUCKET_NAME', 'smart-class-media')}.storage.yandexcloud.net/"
     MEDIA_ROOT = None
 
 LANGUAGES = [
