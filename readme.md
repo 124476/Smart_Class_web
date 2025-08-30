@@ -31,7 +31,7 @@
 ## Ссылки
 
 - **Репозиторий проекта:** [GitHub](https://github.com/124476/Smart_Class_web/)
-- **Демо-сайт:** [Smart Class](https://demosmartclass.pythonanywhere.com/)
+- **Сайт:** [Smart Class](https://smart-class.onrender.com/)
 - **Десктопное приложение:** [Smart Class desktop](https://github.com/124476/Smart_Class_desktop/)
 
 > **Примечание:** Инструкцию по запуску проекта и настройке окружения см. в [setup.md](setup.md)
