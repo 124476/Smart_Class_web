@@ -44,7 +44,7 @@
       {% empty %}
         <li class="list-group-item text-center py-4">
           <p class="text-muted">Нет зарегистрированных проблем</p>
-          <a href="{% url 'problems:problem_add' %}" class="btn btn-primary">Создать первую проблему</a>
+          <a href="{% url 'problems:problem_add' %}" class="btn btn-primary text-light">Создать первую проблему</a>
         </li>
       {% endfor %}
     </ul>
