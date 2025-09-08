@@ -17,7 +17,7 @@
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title">{{ news.name }}</h5>
                 <p class="card-text">{{ news.description|truncatewords:30 }}</p>
-                <a class="btn btn-primary" href="{{ news.get_absolute_url }}">Подробнее</a>
+                <a class="btn btn-primary text-light" href="{{ news.get_absolute_url }}">Подробнее</a>
               </div>
               <div class="card-footer text-muted small">
                 {{ news.created_at|date:"d E Y H:i" }}
