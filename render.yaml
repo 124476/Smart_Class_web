@@ -7,16 +7,8 @@ services:
     dockerfilePath: ./Dockerfile
     dockerContext: .
     envVars:
-      - key: DB_NAME
-        value: postgres
-      - key: DB_USER
-        value: postgres
-      - key: DB_PASSWORD
-        value: 123456789qwe
-      - key: DB_HOST
-        value: db.ywkskkfbfpxuepjvrnhe.supabase.co
-      - key: DB_PORT
-        value: 5432
+      - key: DATABASE_URL
+        value: postgresql://postgres.ywkskkfbfpxuepjvrnhe:123456789qwe@aws-1-eu-central-1.pooler.supabase.com:6543/postgres
       - key: SECRET_KEY
         generateValue: true
       - key: DEBUG
