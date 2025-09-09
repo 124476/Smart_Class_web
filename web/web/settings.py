@@ -1,9 +1,8 @@
 import os
 from pathlib import Path
 
+import dj_database_url
 from dotenv import load_dotenv
-
-from django.utils.translation import gettext_lazy as _
 
 load_dotenv()
 
@@ -92,10 +91,11 @@ WSGI_APPLICATION = "web.wsgi.application"
 
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    "default": dj_database_url.config(
+        default=os.getenv("DATABASE_URL"),
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
 
 
@@ -141,8 +141,8 @@ else:
     MEDIA_ROOT = None
 
 LANGUAGES = [
-    ("en", _("English")),
-    ("ru", _("Russian")),
+    ("en", "English"),
+    ("ru", "Russian"),
 ]
 
 LOCALE_PATHS = (BASE_DIR / "locale/",)

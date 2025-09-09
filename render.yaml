@@ -8,9 +8,7 @@ services:
     dockerContext: .
     envVars:
       - key: DATABASE_URL
-        fromDatabase:
-          name: smart-class-db
-          property: connectionString
+        value: "postgresql://postgres:62ac9_L/$m+Es8z@db.odpitqdywhodbnijtvmu.supabase.co:5432/postgres"
       - key: SECRET_KEY
         generateValue: true
       - key: DEBUG
