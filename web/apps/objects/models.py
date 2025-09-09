@@ -18,7 +18,7 @@ class Topic(models.Model):
 
 
 class Subsection(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=500)
     description = models.TextField(blank=True)
     topic = models.ForeignKey(
         Topic, on_delete=models.CASCADE,
