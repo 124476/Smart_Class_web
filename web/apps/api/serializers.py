@@ -175,8 +175,11 @@ class TopicSerializer(serializers.ModelSerializer):
 
 
 class SubsectionSerializer(serializers.ModelSerializer):
-    topic_name = serializers.CharField(source='topic.name', read_only=True)
+    topic_name = serializers.CharField(read_only=True)
+    object_name = serializers.CharField(source='topic.object.name',
+                                        read_only=True)
     photo = serializers.SerializerMethodField()
+    image = Base64ImageField(required=False, read_only=True)
 
     class Meta:
         model = Subsection
@@ -186,29 +189,36 @@ class SubsectionSerializer(serializers.ModelSerializer):
             'description',
             'topic',
             'topic_name',
-            'photo',  # Только уменьшенное изображение
+            'object_name',  # Добавьте если нужно
+            'photo',
+            'image',
         ]
 
     def get_photo(self, obj):
+        # Оптимизированная обработка изображения
         if not obj.image:
             return None
 
         try:
-            # Открываем изображение
-            img = Image.open(obj.image)
+            # Используем кэширование если возможно
+            if hasattr(obj, '_thumbnail_cache'):
+                return obj._thumbnail_cache
 
-            # Конвертируем в RGB если нужно
+            img = Image.open(obj.image.path)
+
             if img.mode in ('RGBA', 'P'):
                 img = img.convert('RGB')
 
-            # Создаем миниатюру 300x300 с сохранением пропорций
             img.thumbnail((300, 300), Image.LANCZOS)
 
-            # Сжимаем с качеством 75%
             buffer = BytesIO()
             img.save(buffer, format='JPEG', quality=75, optimize=True)
 
-            return base64.b64encode(buffer.getvalue()).decode('utf-8')
+            result = base64.b64encode(buffer.getvalue()).decode('utf-8')
+
+            # Кэшируем результат для этого объекта
+            obj._thumbnail_cache = result
+            return result
 
         except Exception as e:
             print(f"Image processing error: {e}")

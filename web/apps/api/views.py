@@ -2,7 +2,9 @@ __all__ = ()
 
 import base64
 
+from django.core.cache import cache
 from rest_framework.authentication import BasicAuthentication
+from rest_framework.decorators import action
 from rest_framework.views import APIView
 from rest_framework.pagination import Response, PageNumberPagination
 from rest_framework import status, viewsets, permissions, generics
@@ -220,7 +222,34 @@ class StandardResultsSetPagination(PageNumberPagination):
 
 
 class SubsectionViewSet(viewsets.ModelViewSet):
-    queryset = Subsection.objects.all()
     serializer_class = serializers.SubsectionSerializer
     http_method_names = ['get']
     pagination_class = StandardResultsSetPagination
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return serializers.SubsectionListSerializer
+        return serializers.SubsectionSerializer
+
+    def get_queryset(self):
+        queryset = Subsection.objects.select_related(
+            'topic', 'topic__object'
+        ).order_by('id')
+
+        if self.action == 'list':
+            queryset = queryset.only('id', 'name', 'topic__name', 'image')
+
+        return queryset
+
+    def list(self, request, *args, **kwargs):
+        cache_key = 'subsection_list_cache'
+        cached_data = cache.get(cache_key)
+
+        if cached_data and not request.GET.get('nocache'):
+            return Response(cached_data)
+
+        response = super().list(request, *args, **kwargs)
+
+        cache.set(cache_key, response.data, timeout=300)
+
+        return response
