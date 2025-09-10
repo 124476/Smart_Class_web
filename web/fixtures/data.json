@@ -21,6 +21,13 @@
     }
   },
   {
+    "model": "objects.object",
+    "pk": 4,
+    "fields": {
+      "name": "Английский язык"
+    }
+  },
+  {
     "model": "objects.topic",
     "pk": 1,
     "fields": {
@@ -258,6 +265,14 @@
     "fields": {
       "name": "Задание 11 - вариант",
       "object": 1
+    }
+  },
+  {
+    "model": "objects.topic",
+    "pk": 31,
+    "fields": {
+      "name": "Описание личности",
+      "object": 4
     }
   },
   {
@@ -7008,6 +7023,366 @@
       "description": "15",
       "topic": 30,
       "image": "subsection_images/Снимок_экрана_2025-08-14_221442.png"
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 678,
+    "fields": {
+      "name": "авантюрный",
+      "description": "adventurous",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 679,
+    "fields": {
+      "name": "амбициозный",
+      "description": "ambitious",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 680,
+    "fields": {
+      "name": "забавный",
+      "description": "amusing",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 681,
+    "fields": {
+      "name": "вспыльчивый",
+      "description": "bad-tempered",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 682,
+    "fields": {
+      "name": "хвастливый",
+      "description": "boastful",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 683,
+    "fields": {
+      "name": "храбрый",
+      "description": "brave",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 684,
+    "fields": {
+      "name": "широкий кругозор",
+      "description": "broad-minded",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 685,
+    "fields": {
+      "name": "болтливый",
+      "description": "chatty",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 686,
+    "fields": {
+      "name": "веселый",
+      "description": "cheerful",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 687,
+    "fields": {
+      "name": "жестокий",
+      "description": "cruel",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 688,
+    "fields": {
+      "name": "надежный",
+      "description": "dependable",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 689,
+    "fields": {
+      "name": "целеустремленный",
+      "description": "determined",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 690,
+    "fields": {
+      "name": "нечестный",
+      "description": "dishonest",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 691,
+    "fields": {
+      "name": "спокойный",
+      "description": "easy-going",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 692,
+    "fields": {
+      "name": "откровенный",
+      "description": "frank",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 693,
+    "fields": {
+      "name": "щедрый",
+      "description": "generous",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 694,
+    "fields": {
+      "name": "добродушный",
+      "description": "good-natured",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 695,
+    "fields": {
+      "name": "трудолюбивый",
+      "description": "hard-working",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 696,
+    "fields": {
+      "name": "честный",
+      "description": "honest",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 697,
+    "fields": {
+      "name": "нетерпиливый",
+      "description": "impatient",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 698,
+    "fields": {
+      "name": "невежливый",
+      "description": "impolite",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 699,
+    "fields": {
+      "name": "интелектуальный/умный",
+      "description": "intelligent",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 700,
+    "fields": {
+      "name": "безответственный",
+      "description": "irresponsible",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 701,
+    "fields": {
+      "name": "раздражительный",
+      "description": "irritable",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 702,
+    "fields": {
+      "name": "субъективный",
+      "description": "judgemental",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 703,
+    "fields": {
+      "name": "скромный",
+      "description": "modest",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 704,
+    "fields": {
+      "name": "послушный",
+      "description": "obedient",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 705,
+    "fields": {
+      "name": "мятежный",
+      "description": "rebellious",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 706,
+    "fields": {
+      "name": "надежный",
+      "description": "reliable",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 707,
+    "fields": {
+      "name": "ответственный",
+      "description": "responsible",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 708,
+    "fields": {
+      "name": "уверенный в себе",
+      "description": "self-confident",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 709,
+    "fields": {
+      "name": "чувство юмора",
+      "description": "sense of humour",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 710,
+    "fields": {
+      "name": "рассудительный",
+      "description": "sensible",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 711,
+    "fields": {
+      "name": "общительный",
+      "description": "sociable",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 712,
+    "fields": {
+      "name": "упрямый",
+      "description": "stubborn",
+      "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 713,
+    "fields": {
+      "name": "двуликий/двуличностный",
+      "description": "two-faced",
+      "topic": 31,
+      "image": ""
     }
   }
 ]

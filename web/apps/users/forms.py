@@ -1,7 +1,6 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
-from django.utils.translation import gettext_lazy as _
 
 from apps.users.models import User, Profile, RegistrationToken
 
@@ -12,56 +11,56 @@ class SignUpForm(UserCreationForm):
         required=True,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': _('Токен'),
+            'placeholder': 'Токен',
             'autocomplete': 'email'
         }),
         help_text='Введите токен, полученный от администратора'
     )
     email = forms.EmailField(
-        label=_("Email"),
+        label="Email",
         required=True,
         widget=forms.EmailInput(attrs={
             'class': 'form-control',
-            'placeholder': _('example@example.com'),
+            'placeholder': 'example@example.com',
             'autocomplete': 'email'
         }),
-        help_text=_("Обязательное поле. Введите действующий email.")
+        help_text="Обязательное поле. Введите действующий email."
     )
 
     username = forms.CharField(
-        label=_("Имя пользователя"),
+        label="Имя пользователя",
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': _('username'),
+            'placeholder': 'username',
             'autocomplete': 'username'
         }),
-        help_text=_("Только буквы, цифры и @/./+/-/_.")
+        help_text="Только буквы, цифры и @/./+/-/_."
     )
 
     password1 = forms.CharField(
-        label=_("Пароль"),
+        label="Пароль",
         widget=forms.PasswordInput(attrs={
             'class': 'form-control',
-            'placeholder': _('Пароль'),
+            'placeholder': 'Пароль',
             'autocomplete': 'new-password'
         }),
-        help_text=_("""
+        help_text="""
             <ul class="password-requirements">
                 <li>Минимум 8 символов</li>
                 <li>Не должен быть похож на имя пользователя</li>
                 <li>Не должен быть слишком простым</li>
             </ul>
-        """)
+        """
     )
 
     password2 = forms.CharField(
-        label=_("Подтверждение пароля"),
+        label="Подтверждение пароля",
         widget=forms.PasswordInput(attrs={
             'class': 'form-control',
-            'placeholder': _('Подтвердите пароль'),
+            'placeholder': 'Подтвердите пароль',
             'autocomplete': 'new-password'
         }),
-        help_text=_("Введите тот же пароль, что и выше, для проверки.")
+        help_text="Введите тот же пароль, что и выше, для проверки."
     )
 
     class Meta:
@@ -72,13 +71,13 @@ class SignUpForm(UserCreationForm):
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
             raise ValidationError(
-                _("Пользователь с таким email уже существует."))
+                "Пользователь с таким email уже существует.")
         return email
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
         if User.objects.filter(username=username).exists():
-            raise ValidationError(_("Это имя пользователя уже занято."))
+            raise ValidationError("Это имя пользователя уже занято.")
         return username
 
     def clean_registration_token(self):
@@ -92,6 +91,7 @@ class SignUpForm(UserCreationForm):
             raise ValidationError('Токен уже использован или истек')
 
         return token_value
+
 
 class UserUpdateForm(forms.ModelForm):
     class Meta:
