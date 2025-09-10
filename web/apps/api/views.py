@@ -222,34 +222,43 @@ class StandardResultsSetPagination(PageNumberPagination):
 
 
 class SubsectionViewSet(viewsets.ModelViewSet):
+    # Обязательный атрибут для автоматического определения basename
+    queryset = Subsection.objects.all()
+
     serializer_class = serializers.SubsectionSerializer
-    http_method_names = ['get']
+    http_method_names = ['get']  # Только GET запросы
     pagination_class = StandardResultsSetPagination
 
-    def get_serializer_class(self):
-        if self.action == 'list':
-            return serializers.SubsectionListSerializer
-        return serializers.SubsectionSerializer
-
     def get_queryset(self):
+        """
+        Оптимизированный queryset с select_related для избежания N+1
+        """
         queryset = Subsection.objects.select_related(
-            'topic', 'topic__object'
-        ).order_by('id')
+            'topic',  # JOIN с Topic
+            'topic__object'  # JOIN с Object через Topic
+        ).order_by('id')  # Обязательно для пагинации
 
-        if self.action == 'list':
-            queryset = queryset.only('id', 'name', 'topic__name', 'image')
+        # Безопасная проверка на существование связей
+        try:
+            if hasattr(Subsection, 'materials'):
+                from apps.materials.models import Material
+                queryset = queryset.prefetch_related(
+                    models.Prefetch('materials',
+                                    queryset=Material.objects.only('id',
+                                                                   'title'))
+                )
+        except ImportError:
+            pass
+
+        try:
+            if hasattr(Subsection, 'questions'):
+                from apps.questions.models import Question
+                queryset = queryset.prefetch_related(
+                    models.Prefetch('questions',
+                                    queryset=Question.objects.only('id',
+                                                                   'text'))
+                )
+        except ImportError:
+            pass
 
         return queryset
-
-    def list(self, request, *args, **kwargs):
-        cache_key = 'subsection_list_cache'
-        cached_data = cache.get(cache_key)
-
-        if cached_data and not request.GET.get('nocache'):
-            return Response(cached_data)
-
-        response = super().list(request, *args, **kwargs)
-
-        cache.set(cache_key, response.data, timeout=300)
-
-        return response
