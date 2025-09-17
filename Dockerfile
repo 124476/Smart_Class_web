@@ -16,5 +16,5 @@ CMD ["sh", "-c", "\
   python web/manage.py migrate --noinput && \
   python web/manage.py loaddata web/fixtures/data.json && \
   echo \"from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin@example.com', 'admin123') if not User.objects.filter(username='admin').exists() else None\" | python web/manage.py shell && \
-  gunicorn web.wsgi:application --bind 0.0.0.0:8000 --preload \
+  gunicorn web.wsgi:application --bind 0.0.0.0:$PORT --preload \
 "]
