@@ -276,6 +276,14 @@
     }
   },
   {
+    "model": "objects.topic",
+    "pk": 32,
+    "fields": {
+      "name": "Глаголы",
+      "object": 4
+    }
+  },
+  {
     "model": "objects.subsection",
     "pk": 1,
     "fields": {
@@ -7382,6 +7390,186 @@
       "name": "двуликий/двуличностный",
       "description": "two-faced",
       "topic": 31,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 714,
+    "fields": {
+      "name": "признаваться/осознавать",
+      "description": "confus",
+      "topic": 32,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 715,
+    "fields": {
+      "name": "угрожать/пугать",
+      "description": "threaten",
+      "topic": 32,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 716,
+    "fields": {
+      "name": "предлагать",
+      "description": "suggest",
+      "topic": 32,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 717,
+    "fields": {
+      "name": "осуждать/обвинять",
+      "description": "accuse",
+      "topic": 32,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 718,
+    "fields": {
+      "name": "утверждать/заявлять/требовать",
+      "description": "claime",
+      "topic": 32,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 719,
+    "fields": {
+      "name": "предупреждать/предоставлять",
+      "description": "warn",
+      "topic": 32,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 720,
+    "fields": {
+      "name": "заказывать/приказывать",
+      "description": "order",
+      "topic": 32,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 721,
+    "fields": {
+      "name": "отрицать",
+      "description": "deny",
+      "topic": 32,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 722,
+    "fields": {
+      "name": "иметь в авторитете",
+      "description": "look up to",
+      "topic": 32,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 723,
+    "fields": {
+      "name": "считать себя выше",
+      "description": "look down on",
+      "topic": 32,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 724,
+    "fields": {
+      "name": "принимать/быть похожим",
+      "description": "takes after",
+      "topic": 32,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 725,
+    "fields": {
+      "name": "держаться вместе",
+      "description": "stick together",
+      "topic": 32,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 726,
+    "fields": {
+      "name": "ссориться",
+      "description": "fall out",
+      "topic": 32,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 727,
+    "fields": {
+      "name": "расстаться/разойтись",
+      "description": "gone off",
+      "topic": 32,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 728,
+    "fields": {
+      "name": "расстаться/разойтись",
+      "description": "finished with",
+      "topic": 32,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 729,
+    "fields": {
+      "name": "найти общий язык",
+      "description": "hit it off",
+      "topic": 32,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 730,
+    "fields": {
+      "name": "положиться",
+      "description": "count on",
+      "topic": 32,
+      "image": ""
+    }
+  },
+  {
+    "model": "objects.subsection",
+    "pk": 731,
+    "fields": {
+      "name": "подвести",
+      "description": "let down",
+      "topic": 32,
       "image": ""
     }
   }
